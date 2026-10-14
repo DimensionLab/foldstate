@@ -1,0 +1,9 @@
+{
+  "name": "foldstate-xstate-oracle",
+  "private": true,
+  "type": "module",
+  "description": "Runs generated statecharts in XState to compare with foldstate. Used by tests/xstate.rs.",
+  "dependencies": {
+    "xstate": "5.33.2"
+  }
+}

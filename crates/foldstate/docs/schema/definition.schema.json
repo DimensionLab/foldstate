@@ -1,0 +1,570 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/DimensionLab/foldstate/schema/definition.schema.json",
+  "title": "foldstate definition",
+  "description": "A machine definition, schema `foldstate/1`. Semantics: docs/semantics.md.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema",
+    "id",
+    "root"
+  ],
+  "properties": {
+    "schema": {
+      "const": "foldstate/1"
+    },
+    "id": {
+      "type": "string"
+    },
+    "context": {
+      "type": [
+        "object",
+        "null"
+      ]
+    },
+    "unhandled": {
+      "enum": [
+        "reject",
+        "ignore"
+      ],
+      "default": "reject"
+    },
+    "ignore": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Event descriptors ignored instead of rejected"
+    },
+    "max_microsteps": {
+      "type": "integer",
+      "minimum": 0,
+      "default": 1000
+    },
+    "root": {
+      "$ref": "#/$defs/state"
+    }
+  },
+  "$defs": {
+    "guard": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "in"
+          ],
+          "properties": {
+            "in": {
+              "type": "string",
+              "description": "State reference: `name` (sibling), `.a.b` (descendant), `#a.b` (path from the root)"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "not"
+          ],
+          "properties": {
+            "not": {
+              "$ref": "#/$defs/guard"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "all"
+          ],
+          "properties": {
+            "all": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/guard"
+              }
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "any"
+          ],
+          "properties": {
+            "any": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/guard"
+              }
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "cmp"
+          ],
+          "properties": {
+            "cmp": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "left",
+                "op",
+                "right"
+              ],
+              "properties": {
+                "left": {
+                  "$ref": "#/$defs/expr"
+                },
+                "op": {
+                  "enum": [
+                    "eq",
+                    "ne",
+                    "lt",
+                    "le",
+                    "gt",
+                    "ge"
+                  ]
+                },
+                "right": {
+                  "$ref": "#/$defs/expr"
+                }
+              }
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "named"
+          ],
+          "properties": {
+            "named": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "name"
+              ],
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "params": {}
+              }
+            }
+          }
+        }
+      ]
+    },
+    "expr": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "lit"
+          ],
+          "properties": {
+            "lit": {}
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "ctx"
+          ],
+          "properties": {
+            "ctx": {
+              "type": "string",
+              "description": "JSON Pointer (RFC 6901)",
+              "pattern": "^(/[^/]*)*$"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "event"
+          ],
+          "properties": {
+            "event": {
+              "type": "string",
+              "description": "JSON Pointer (RFC 6901)",
+              "pattern": "^(/[^/]*)*$"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "add"
+          ],
+          "properties": {
+            "add": {
+              "type": "array",
+              "prefixItems": [
+                {
+                  "$ref": "#/$defs/expr"
+                },
+                {
+                  "$ref": "#/$defs/expr"
+                }
+              ],
+              "minItems": 2,
+              "maxItems": 2
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "sub"
+          ],
+          "properties": {
+            "sub": {
+              "type": "array",
+              "prefixItems": [
+                {
+                  "$ref": "#/$defs/expr"
+                },
+                {
+                  "$ref": "#/$defs/expr"
+                }
+              ],
+              "minItems": 2,
+              "maxItems": 2
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "mul"
+          ],
+          "properties": {
+            "mul": {
+              "type": "array",
+              "prefixItems": [
+                {
+                  "$ref": "#/$defs/expr"
+                },
+                {
+                  "$ref": "#/$defs/expr"
+                }
+              ],
+              "minItems": 2,
+              "maxItems": 2
+            }
+          }
+        }
+      ]
+    },
+    "action": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "assign"
+          ],
+          "properties": {
+            "assign": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "path",
+                "value"
+              ],
+              "properties": {
+                "path": {
+                  "type": "string",
+                  "description": "JSON Pointer (RFC 6901)",
+                  "pattern": "^(/[^/]*)*$"
+                },
+                "value": {
+                  "$ref": "#/$defs/expr"
+                }
+              }
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "raise"
+          ],
+          "properties": {
+            "raise": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "event"
+              ],
+              "properties": {
+                "event": {
+                  "type": "string"
+                },
+                "data": {
+                  "$ref": "#/$defs/expr"
+                }
+              }
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "emit"
+          ],
+          "properties": {
+            "emit": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "name"
+              ],
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "params": {
+                  "$ref": "#/$defs/expr"
+                }
+              }
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "schedule"
+          ],
+          "properties": {
+            "schedule": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "id",
+                "event",
+                "delay_ms"
+              ],
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "event": {
+                  "type": "string"
+                },
+                "delay_ms": {
+                  "type": "integer",
+                  "minimum": 0
+                }
+              }
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "cancel"
+          ],
+          "properties": {
+            "cancel": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "id"
+              ],
+              "properties": {
+                "id": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "transition": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "event": {
+          "type": "string",
+          "description": "Space-separated event descriptors. Absent: eventless."
+        },
+        "guard": {
+          "$ref": "#/$defs/guard"
+        },
+        "target": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "description": "State reference: `name` (sibling), `.a.b` (descendant), `#a.b` (path from the root)"
+          }
+        },
+        "internal": {
+          "type": "boolean",
+          "default": false
+        },
+        "actions": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/action"
+          }
+        }
+      }
+    },
+    "after": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "delay_ms"
+      ],
+      "properties": {
+        "delay_ms": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "id": {
+          "type": "string"
+        },
+        "guard": {
+          "$ref": "#/$defs/guard"
+        },
+        "target": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "description": "State reference: `name` (sibling), `.a.b` (descendant), `#a.b` (path from the root)"
+          }
+        },
+        "internal": {
+          "type": "boolean",
+          "default": false
+        },
+        "actions": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/action"
+          }
+        }
+      }
+    },
+    "invoke": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "name"
+      ],
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "params": {
+          "$ref": "#/$defs/expr"
+        }
+      }
+    },
+    "state": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[^.#\\s]+$"
+        },
+        "kind": {
+          "enum": [
+            "atomic",
+            "compound",
+            "parallel",
+            "final",
+            "history"
+          ]
+        },
+        "initial": {
+          "type": "string",
+          "description": "Id of the child entered by default"
+        },
+        "deep": {
+          "type": "boolean",
+          "default": false
+        },
+        "default": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "description": "State reference: `name` (sibling), `.a.b` (descendant), `#a.b` (path from the root)"
+          }
+        },
+        "states": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/state"
+          }
+        },
+        "on": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/transition"
+          }
+        },
+        "after": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/after"
+          }
+        },
+        "entry": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/action"
+          }
+        },
+        "exit": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/action"
+          }
+        },
+        "invoke": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/invoke"
+          }
+        },
+        "tags": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "meta": {}
+      }
+    }
+  }
+}

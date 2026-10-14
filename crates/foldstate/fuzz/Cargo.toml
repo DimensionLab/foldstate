@@ -1,0 +1,39 @@
+[package]
+name = "foldstate-fuzz"
+version = "0.0.0"
+edition = "2024"
+publish = false
+license = "Apache-2.0"
+
+[package.metadata]
+cargo-fuzz = true
+
+[dependencies]
+libfuzzer-sys = "0.4"
+foldstate = { path = ".." }
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+
+# Not part of the workspace above: fuzzing needs a nightly toolchain and its own lockfile.
+[workspace]
+
+[[bin]]
+name = "definition"
+path = "fuzz_targets/definition.rs"
+test = false
+doc = false
+bench = false
+
+[[bin]]
+name = "log"
+path = "fuzz_targets/log.rs"
+test = false
+doc = false
+bench = false
+
+[[bin]]
+name = "step"
+path = "fuzz_targets/step.rs"
+test = false
+doc = false
+bench = false

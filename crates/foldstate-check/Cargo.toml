@@ -1,0 +1,26 @@
+[package]
+name = "foldstate-check"
+description = "Explore a foldstate machine: unreachable states, deadlocks, invariants and the shortest event sequence to every state and transition"
+version = "0.9.0"
+edition.workspace = true
+rust-version.workspace = true
+license = "Apache-2.0"
+authors.workspace = true
+repository.workspace = true
+readme = "README.md"
+keywords = ["statechart", "state-machine", "model-checking", "testing"]
+categories = ["development-tools::testing"]
+
+[dependencies]
+foldstate = { path = "../foldstate", version = "0.9.0" }
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+
+# Optional: run a machine under the stateright model checker.
+stateright = { version = "0.31", optional = true }
+
+[features]
+stateright = ["dep:stateright"]
+
+[lints.rust]
+unsafe_code = "forbid"

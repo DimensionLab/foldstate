@@ -1,0 +1,98 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/DimensionLab/foldstate/schema/snapshot.schema.json",
+  "title": "foldstate snapshot",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema",
+    "machine",
+    "configuration",
+    "context"
+  ],
+  "properties": {
+    "schema": {
+      "const": "foldstate-snapshot/1"
+    },
+    "machine": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$",
+      "description": "SHA-256 of the canonical JSON (RFC 8785) of the definition"
+    },
+    "status": {
+      "enum": [
+        "active",
+        "done"
+      ],
+      "default": "active"
+    },
+    "configuration": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Paths of the active states in document order, without the root"
+    },
+    "history": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        }
+      }
+    },
+    "context": {},
+    "timers": {
+      "type": "object",
+      "additionalProperties": {
+        "$ref": "#/$defs/timer"
+      }
+    },
+    "invocations": {
+      "type": "object",
+      "additionalProperties": {
+        "$ref": "#/$defs/invocation"
+      }
+    }
+  },
+  "$defs": {
+    "timer": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "event",
+        "delay_ms"
+      ],
+      "properties": {
+        "event": {
+          "type": "string"
+        },
+        "delay_ms": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "due_ms": {
+          "type": "integer"
+        }
+      }
+    },
+    "invocation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "state",
+        "name"
+      ],
+      "properties": {
+        "state": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "params": {}
+      }
+    }
+  }
+}

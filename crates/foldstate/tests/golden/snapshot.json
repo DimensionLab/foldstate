@@ -1,0 +1,32 @@
+{
+  "schema": "foldstate-snapshot/1",
+  "machine": "6c9ae6f734cbe47545856c195d5e95a3307980568b6f47467f5e4f45ad5c94a8",
+  "configuration": [
+    "job",
+    "job.busy",
+    "gate",
+    "gate.open"
+  ],
+  "context": {
+    "n": 1,
+    "note": "first"
+  },
+  "timers": {
+    "extra": {
+      "event": "tick",
+      "delay_ms": 100,
+      "due_ms": 1100
+    },
+    "job.busy:after:0": {
+      "event": "after.job.busy:after:0",
+      "delay_ms": 5000,
+      "due_ms": 6000
+    }
+  },
+  "invocations": {
+    "job.busy:invoke:0": {
+      "state": "job.busy",
+      "name": "work"
+    }
+  }
+}

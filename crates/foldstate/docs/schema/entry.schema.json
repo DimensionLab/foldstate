@@ -1,0 +1,493 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/DimensionLab/foldstate/schema/entry.schema.json",
+  "title": "foldstate log entry",
+  "$ref": "#/$defs/entry",
+  "$defs": {
+    "event": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "name"
+      ],
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "data": {},
+        "at": {
+          "type": "integer",
+          "description": "Milliseconds on the host's clock"
+        }
+      }
+    },
+    "timer": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "event",
+        "delay_ms"
+      ],
+      "properties": {
+        "event": {
+          "type": "string"
+        },
+        "delay_ms": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "due_ms": {
+          "type": "integer"
+        }
+      }
+    },
+    "invocation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "state",
+        "name"
+      ],
+      "properties": {
+        "state": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "params": {}
+      }
+    },
+    "op": {
+      "description": "One reversible change to a snapshot. `before` or `after` absent means the value did not exist on that side.",
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "enter"
+          ],
+          "properties": {
+            "enter": {
+              "type": "string",
+              "description": "Path of the state that became active"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "exit"
+          ],
+          "properties": {
+            "exit": {
+              "type": "string",
+              "description": "Path of the state that stopped being active"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "set"
+          ],
+          "properties": {
+            "set": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "path"
+              ],
+              "properties": {
+                "path": {
+                  "type": "string",
+                  "description": "JSON Pointer (RFC 6901)",
+                  "pattern": "^(/[^/]*)*$"
+                },
+                "before": {},
+                "after": {}
+              }
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "history"
+          ],
+          "properties": {
+            "history": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "state"
+              ],
+              "properties": {
+                "state": {
+                  "type": "string"
+                },
+                "before": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "after": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "timer"
+          ],
+          "properties": {
+            "timer": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "id"
+              ],
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "before": {
+                  "$ref": "#/$defs/timer"
+                },
+                "after": {
+                  "$ref": "#/$defs/timer"
+                }
+              }
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "invocation"
+          ],
+          "properties": {
+            "invocation": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "id"
+              ],
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "before": {
+                  "$ref": "#/$defs/invocation"
+                },
+                "after": {
+                  "$ref": "#/$defs/invocation"
+                }
+              }
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "status"
+          ],
+          "properties": {
+            "status": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "before",
+                "after"
+              ],
+              "properties": {
+                "before": {
+                  "enum": [
+                    "active",
+                    "done"
+                  ]
+                },
+                "after": {
+                  "enum": [
+                    "active",
+                    "done"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "effect": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "emit"
+          ],
+          "properties": {
+            "emit": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "name"
+              ],
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "params": {}
+              }
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "schedule"
+          ],
+          "properties": {
+            "schedule": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "id",
+                "event",
+                "delay_ms"
+              ],
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "event": {
+                  "type": "string"
+                },
+                "delay_ms": {
+                  "type": "integer",
+                  "minimum": 0
+                },
+                "due_ms": {
+                  "type": "integer"
+                }
+              }
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "cancel"
+          ],
+          "properties": {
+            "cancel": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "id"
+              ],
+              "properties": {
+                "id": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "start"
+          ],
+          "properties": {
+            "start": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "id",
+                "name"
+              ],
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "name": {
+                  "type": "string"
+                },
+                "params": {}
+              }
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "stop"
+          ],
+          "properties": {
+            "stop": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "id"
+              ],
+              "properties": {
+                "id": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "entry": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "seq",
+        "kind"
+      ],
+      "properties": {
+        "seq": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "kind": {
+          "description": "What the entry records",
+          "oneOf": [
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "start"
+              ],
+              "properties": {
+                "start": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [],
+                  "properties": {
+                    "input": {}
+                  }
+                }
+              }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "event"
+              ],
+              "properties": {
+                "event": {
+                  "$ref": "#/$defs/event"
+                }
+              }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "restore"
+              ],
+              "properties": {
+                "restore": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "to"
+                  ],
+                  "properties": {
+                    "to": {
+                      "type": "integer",
+                      "minimum": 1,
+                      "description": "The entry whose state was restored"
+                    }
+                  }
+                }
+              }
+            }
+          ]
+        },
+        "handled": {
+          "type": "boolean",
+          "default": true,
+          "description": "False when the event was ignored"
+        },
+        "ops": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/op"
+          }
+        },
+        "effects": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/effect"
+          }
+        },
+        "microsteps": {
+          "type": "array",
+          "items": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "source",
+                "index"
+              ],
+              "properties": {
+                "source": {
+                  "type": "string"
+                },
+                "index": {
+                  "type": "integer",
+                  "minimum": 0
+                }
+              }
+            }
+          }
+        },
+        "guards": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "name"
+            ],
+            "properties": {
+              "name": {
+                "type": "string"
+              },
+              "params": {},
+              "result": {
+                "type": "boolean"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

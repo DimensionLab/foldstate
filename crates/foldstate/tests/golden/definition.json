@@ -1,0 +1,231 @@
+{
+  "schema": "foldstate/1",
+  "id": "golden",
+  "context": {
+    "n": 0,
+    "note": null
+  },
+  "ignore": [
+    "noise.*"
+  ],
+  "root": {
+    "id": "golden",
+    "kind": "parallel",
+    "states": [
+      {
+        "id": "job",
+        "initial": "idle",
+        "states": [
+          {
+            "id": "h",
+            "kind": "history",
+            "deep": true,
+            "default": [
+              "idle"
+            ]
+          },
+          {
+            "id": "idle",
+            "on": [
+              {
+                "event": "start",
+                "guard": {
+                  "all": [
+                    {
+                      "not": {
+                        "in": "#gate.closed"
+                      }
+                    },
+                    {
+                      "cmp": {
+                        "left": {
+                          "ctx": "/n"
+                        },
+                        "op": "lt",
+                        "right": {
+                          "lit": 3
+                        }
+                      }
+                    },
+                    {
+                      "named": {
+                        "name": "allowed",
+                        "params": {
+                          "who": "anyone"
+                        }
+                      }
+                    }
+                  ]
+                },
+                "target": [
+                  "busy"
+                ],
+                "actions": [
+                  {
+                    "assign": {
+                      "path": "/n",
+                      "value": {
+                        "add": [
+                          {
+                            "ctx": "/n"
+                          },
+                          {
+                            "lit": 1
+                          }
+                        ]
+                      }
+                    }
+                  },
+                  {
+                    "assign": {
+                      "path": "/note",
+                      "value": {
+                        "event": "/note"
+                      }
+                    }
+                  },
+                  {
+                    "emit": {
+                      "name": "started",
+                      "params": {
+                        "ctx": "/n"
+                      }
+                    }
+                  },
+                  {
+                    "raise": {
+                      "event": "internal.started",
+                      "data": {
+                        "lit": {
+                          "k": 1
+                        }
+                      }
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": "busy",
+            "on": [
+              {
+                "event": "pause",
+                "target": [
+                  "#gate.closed",
+                  "#job.idle"
+                ]
+              },
+              {
+                "event": "tick",
+                "internal": true
+              },
+              {
+                "event": "finish",
+                "target": [
+                  "done"
+                ]
+              }
+            ],
+            "after": [
+              {
+                "delay_ms": 5000,
+                "target": [
+                  "idle"
+                ],
+                "actions": [
+                  {
+                    "cancel": {
+                      "id": "extra"
+                    }
+                  }
+                ]
+              }
+            ],
+            "entry": [
+              {
+                "schedule": {
+                  "id": "extra",
+                  "event": "tick",
+                  "delay_ms": 100
+                }
+              }
+            ],
+            "invoke": [
+              {
+                "name": "work",
+                "params": {
+                  "event": "/note"
+                }
+              }
+            ],
+            "tags": [
+              "working"
+            ],
+            "meta": {
+              "label": "Busy"
+            }
+          },
+          {
+            "id": "done",
+            "kind": "final"
+          }
+        ]
+      },
+      {
+        "id": "gate",
+        "states": [
+          {
+            "id": "open"
+          },
+          {
+            "id": "closed",
+            "on": [
+              {
+                "event": "resume",
+                "target": [
+                  "#job.h",
+                  "open"
+                ]
+              },
+              {
+                "guard": {
+                  "any": [
+                    {
+                      "cmp": {
+                        "left": {
+                          "sub": [
+                            {
+                              "mul": [
+                                {
+                                  "ctx": "/n"
+                                },
+                                {
+                                  "lit": 2
+                                }
+                              ]
+                            },
+                            {
+                              "lit": 1
+                            }
+                          ]
+                        },
+                        "op": "ge",
+                        "right": {
+                          "lit": 99
+                        }
+                      }
+                    }
+                  ]
+                },
+                "target": [
+                  "open"
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,650 @@
+{
+  "schema": "foldstate-log/1",
+  "machine": "6c9ae6f734cbe47545856c195d5e95a3307980568b6f47467f5e4f45ad5c94a8",
+  "branches": [
+    {
+      "id": 0,
+      "entries": [
+        {
+          "seq": 1,
+          "kind": {
+            "start": {
+              "input": {
+                "note": "from input"
+              }
+            }
+          },
+          "ops": [
+            {
+              "set": {
+                "path": "",
+                "before": null,
+                "after": {
+                  "n": 0,
+                  "note": "from input"
+                }
+              }
+            },
+            {
+              "enter": ""
+            },
+            {
+              "enter": "job"
+            },
+            {
+              "enter": "job.idle"
+            },
+            {
+              "enter": "gate"
+            },
+            {
+              "enter": "gate.open"
+            }
+          ],
+          "microsteps": [
+            []
+          ]
+        },
+        {
+          "seq": 2,
+          "kind": {
+            "event": {
+              "name": "start",
+              "data": {
+                "note": "first"
+              },
+              "at": 1000
+            }
+          },
+          "ops": [
+            {
+              "exit": "job.idle"
+            },
+            {
+              "set": {
+                "path": "/n",
+                "before": 0,
+                "after": 1
+              }
+            },
+            {
+              "set": {
+                "path": "/note",
+                "before": "from input",
+                "after": "first"
+              }
+            },
+            {
+              "enter": "job.busy"
+            },
+            {
+              "timer": {
+                "id": "extra",
+                "after": {
+                  "event": "tick",
+                  "delay_ms": 100,
+                  "due_ms": 1100
+                }
+              }
+            },
+            {
+              "timer": {
+                "id": "job.busy:after:0",
+                "after": {
+                  "event": "after.job.busy:after:0",
+                  "delay_ms": 5000,
+                  "due_ms": 6000
+                }
+              }
+            },
+            {
+              "invocation": {
+                "id": "job.busy:invoke:0",
+                "after": {
+                  "state": "job.busy",
+                  "name": "work"
+                }
+              }
+            }
+          ],
+          "effects": [
+            {
+              "emit": {
+                "name": "started",
+                "params": 1
+              }
+            },
+            {
+              "schedule": {
+                "id": "extra",
+                "event": "tick",
+                "delay_ms": 100,
+                "due_ms": 1100
+              }
+            },
+            {
+              "schedule": {
+                "id": "job.busy:after:0",
+                "event": "after.job.busy:after:0",
+                "delay_ms": 5000,
+                "due_ms": 6000
+              }
+            },
+            {
+              "start": {
+                "id": "job.busy:invoke:0",
+                "name": "work"
+              }
+            }
+          ],
+          "microsteps": [
+            [
+              {
+                "source": "job.idle",
+                "index": 0
+              }
+            ]
+          ],
+          "guards": [
+            {
+              "name": "allowed",
+              "params": {
+                "who": "anyone"
+              },
+              "result": true
+            }
+          ]
+        },
+        {
+          "seq": 3,
+          "kind": {
+            "event": {
+              "name": "noise.hum",
+              "at": 1500
+            }
+          },
+          "handled": false
+        },
+        {
+          "seq": 4,
+          "kind": {
+            "event": {
+              "name": "pause",
+              "at": 2000
+            }
+          },
+          "ops": [
+            {
+              "history": {
+                "state": "job.h",
+                "after": [
+                  "job.busy"
+                ]
+              }
+            },
+            {
+              "exit": "gate.open"
+            },
+            {
+              "exit": "gate"
+            },
+            {
+              "timer": {
+                "id": "job.busy:after:0",
+                "before": {
+                  "event": "after.job.busy:after:0",
+                  "delay_ms": 5000,
+                  "due_ms": 6000
+                }
+              }
+            },
+            {
+              "invocation": {
+                "id": "job.busy:invoke:0",
+                "before": {
+                  "state": "job.busy",
+                  "name": "work"
+                }
+              }
+            },
+            {
+              "exit": "job.busy"
+            },
+            {
+              "exit": "job"
+            },
+            {
+              "enter": "job"
+            },
+            {
+              "enter": "job.idle"
+            },
+            {
+              "enter": "gate"
+            },
+            {
+              "enter": "gate.closed"
+            }
+          ],
+          "effects": [
+            {
+              "cancel": {
+                "id": "job.busy:after:0"
+              }
+            },
+            {
+              "stop": {
+                "id": "job.busy:invoke:0"
+              }
+            }
+          ],
+          "microsteps": [
+            [
+              {
+                "source": "job.busy",
+                "index": 0
+              }
+            ]
+          ]
+        },
+        {
+          "seq": 5,
+          "kind": {
+            "event": {
+              "name": "resume",
+              "at": 3000
+            }
+          },
+          "ops": [
+            {
+              "history": {
+                "state": "job.h",
+                "before": [
+                  "job.busy"
+                ],
+                "after": [
+                  "job.idle"
+                ]
+              }
+            },
+            {
+              "exit": "gate.closed"
+            },
+            {
+              "exit": "gate"
+            },
+            {
+              "exit": "job.idle"
+            },
+            {
+              "exit": "job"
+            },
+            {
+              "enter": "job"
+            },
+            {
+              "enter": "job.idle"
+            },
+            {
+              "enter": "gate"
+            },
+            {
+              "enter": "gate.open"
+            }
+          ],
+          "microsteps": [
+            [
+              {
+                "source": "gate.closed",
+                "index": 0
+              }
+            ]
+          ]
+        },
+        {
+          "seq": 6,
+          "kind": {
+            "event": {
+              "name": "start",
+              "data": {
+                "note": "third"
+              },
+              "at": 5000
+            }
+          },
+          "ops": [
+            {
+              "exit": "job.idle"
+            },
+            {
+              "set": {
+                "path": "/n",
+                "before": 1,
+                "after": 2
+              }
+            },
+            {
+              "set": {
+                "path": "/note",
+                "before": "first",
+                "after": "third"
+              }
+            },
+            {
+              "enter": "job.busy"
+            },
+            {
+              "timer": {
+                "id": "extra",
+                "before": {
+                  "event": "tick",
+                  "delay_ms": 100,
+                  "due_ms": 1100
+                },
+                "after": {
+                  "event": "tick",
+                  "delay_ms": 100,
+                  "due_ms": 5100
+                }
+              }
+            },
+            {
+              "timer": {
+                "id": "job.busy:after:0",
+                "after": {
+                  "event": "after.job.busy:after:0",
+                  "delay_ms": 5000,
+                  "due_ms": 10000
+                }
+              }
+            },
+            {
+              "invocation": {
+                "id": "job.busy:invoke:0",
+                "after": {
+                  "state": "job.busy",
+                  "name": "work"
+                }
+              }
+            }
+          ],
+          "effects": [
+            {
+              "emit": {
+                "name": "started",
+                "params": 2
+              }
+            },
+            {
+              "schedule": {
+                "id": "extra",
+                "event": "tick",
+                "delay_ms": 100,
+                "due_ms": 5100
+              }
+            },
+            {
+              "schedule": {
+                "id": "job.busy:after:0",
+                "event": "after.job.busy:after:0",
+                "delay_ms": 5000,
+                "due_ms": 10000
+              }
+            },
+            {
+              "start": {
+                "id": "job.busy:invoke:0",
+                "name": "work"
+              }
+            }
+          ],
+          "microsteps": [
+            [
+              {
+                "source": "job.idle",
+                "index": 0
+              }
+            ]
+          ],
+          "guards": [
+            {
+              "name": "allowed",
+              "params": {
+                "who": "anyone"
+              },
+              "result": true
+            }
+          ]
+        },
+        {
+          "seq": 7,
+          "kind": {
+            "event": {
+              "name": "tick",
+              "at": 5100
+            }
+          },
+          "ops": [
+            {
+              "timer": {
+                "id": "extra",
+                "before": {
+                  "event": "tick",
+                  "delay_ms": 100,
+                  "due_ms": 5100
+                }
+              }
+            }
+          ],
+          "microsteps": [
+            [
+              {
+                "source": "job.busy",
+                "index": 1
+              }
+            ]
+          ]
+        },
+        {
+          "seq": 8,
+          "kind": {
+            "restore": {
+              "to": 2
+            }
+          },
+          "ops": [
+            {
+              "set": {
+                "path": "/n",
+                "before": 2,
+                "after": 1
+              }
+            },
+            {
+              "set": {
+                "path": "/note",
+                "before": "third",
+                "after": "first"
+              }
+            },
+            {
+              "history": {
+                "state": "job.h",
+                "before": [
+                  "job.idle"
+                ]
+              }
+            },
+            {
+              "timer": {
+                "id": "extra",
+                "after": {
+                  "event": "tick",
+                  "delay_ms": 100,
+                  "due_ms": 1100
+                }
+              }
+            },
+            {
+              "timer": {
+                "id": "job.busy:after:0",
+                "before": {
+                  "event": "after.job.busy:after:0",
+                  "delay_ms": 5000,
+                  "due_ms": 10000
+                },
+                "after": {
+                  "event": "after.job.busy:after:0",
+                  "delay_ms": 5000,
+                  "due_ms": 6000
+                }
+              }
+            }
+          ],
+          "effects": [
+            {
+              "cancel": {
+                "id": "job.busy:after:0"
+              }
+            },
+            {
+              "schedule": {
+                "id": "extra",
+                "event": "tick",
+                "delay_ms": 100,
+                "due_ms": 1100
+              }
+            },
+            {
+              "schedule": {
+                "id": "job.busy:after:0",
+                "event": "after.job.busy:after:0",
+                "delay_ms": 5000,
+                "due_ms": 6000
+              }
+            }
+          ]
+        },
+        {
+          "seq": 9,
+          "kind": {
+            "event": {
+              "name": "finish",
+              "at": 6000
+            }
+          },
+          "ops": [
+            {
+              "timer": {
+                "id": "job.busy:after:0",
+                "before": {
+                  "event": "after.job.busy:after:0",
+                  "delay_ms": 5000,
+                  "due_ms": 6000
+                }
+              }
+            },
+            {
+              "invocation": {
+                "id": "job.busy:invoke:0",
+                "before": {
+                  "state": "job.busy",
+                  "name": "work"
+                }
+              }
+            },
+            {
+              "exit": "job.busy"
+            },
+            {
+              "enter": "job.done"
+            }
+          ],
+          "effects": [
+            {
+              "cancel": {
+                "id": "job.busy:after:0"
+              }
+            },
+            {
+              "stop": {
+                "id": "job.busy:invoke:0"
+              }
+            }
+          ],
+          "microsteps": [
+            [
+              {
+                "source": "job.busy",
+                "index": 2
+              }
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": 1,
+      "parent": {
+        "branch": 0,
+        "seq": 4
+      },
+      "entries": [
+        {
+          "seq": 5,
+          "kind": {
+            "event": {
+              "name": "resume",
+              "at": 4500
+            }
+          },
+          "ops": [
+            {
+              "history": {
+                "state": "job.h",
+                "before": [
+                  "job.busy"
+                ],
+                "after": [
+                  "job.idle"
+                ]
+              }
+            },
+            {
+              "exit": "gate.closed"
+            },
+            {
+              "exit": "gate"
+            },
+            {
+              "exit": "job.idle"
+            },
+            {
+              "exit": "job"
+            },
+            {
+              "enter": "job"
+            },
+            {
+              "enter": "job.idle"
+            },
+            {
+              "enter": "gate"
+            },
+            {
+              "enter": "gate.open"
+            }
+          ],
+          "microsteps": [
+            [
+              {
+                "source": "gate.closed",
+                "index": 0
+              }
+            ]
+          ]
+        }
+      ]
+    }
+  ]
+}

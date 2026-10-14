@@ -1,0 +1,41 @@
+[package]
+name = "foldstate"
+description = "Statecharts as data with an event log: a pure, deterministic kernel, replay, fork, restore and explanations"
+version = "0.9.0"
+edition.workspace = true
+rust-version.workspace = true
+license = "Apache-2.0"
+authors.workspace = true
+repository.workspace = true
+readme = "README.md"
+keywords = ["statechart", "state-machine", "event-sourcing", "wasm", "no-std"]
+categories = ["no-std", "wasm", "data-structures"]
+# Kept out of the published package: fuzzing has its own manifest, and the comparison
+# harnesses download what they need.
+exclude = ["fuzz", "tests/xstate/node_modules", "tests/w3c/cache"]
+
+[features]
+default = ["std"]
+# `std` only switches the dependencies to their std builds; the crate itself is `no_std + alloc`.
+std = ["serde/std", "serde_json/std"]
+
+[dependencies]
+serde = { version = "1", default-features = false, features = ["derive", "alloc"] }
+# `float_roundtrip`: without it a float written to JSON can read back one unit in the last place
+# off, and a stored log would no longer verify.
+serde_json = { version = "1", default-features = false, features = ["alloc", "float_roundtrip"] }
+
+[dev-dependencies]
+# Baseline for benches/baseline_statig.rs only: a state machine compiled from Rust code.
+statig = "0.4"
+
+[lints.rust]
+unsafe_code = "forbid"
+
+[[bench]]
+name = "kernel"
+harness = false
+
+[[bench]]
+name = "baseline_statig"
+harness = false
