@@ -1,1 +1,366 @@
-{"schema":"foldstate/1","id":"generated","context":{"n":0},"ignore":["c","tick.*"],"max_microsteps":40,"root":{"id":"root","kind":"parallel","states":[{"id":"s1","kind":"compound","states":[{"id":"s2","on":[{"event":"b","target":["#s5.s10.s11"],"actions":[{"assign":{"path":"/n","value":{"add":[{"ctx":"/n"},{"lit":1}]}}}]},{"event":"*","guard":{"named":{"name":"even"}},"target":["#s5.s6.s8"]}]},{"id":"s4","kind":"history","default":["#s1.s3"]},{"id":"s3","on":[{"event":"c","guard":{"cmp":{"left":{"ctx":"/n"},"op":"lt","right":{"lit":2}}},"target":["#s5.s14.s15"],"actions":[{"assign":{"path":"/last","value":{"event":"/v"}}},{"assign":{"path":"/seen/y~0","value":{"sub":[{"ctx":"/n"},{"lit":0.5}]}}}]}]}],"on":[{"event":"d","target":["#s5.s6.s9"],"actions":[{"emit":{"name":"e2"}}]}]},{"id":"s5","kind":"compound","initial":"s10","states":[{"id":"s6","kind":"compound","states":[{"id":"s7","kind":"final"},{"id":"s8","on":[{"event":"a.x","guard":{"not":{"in":"#s5.s14"}},"target":["#s5.s14.s16"],"actions":[{"emit":{"name":"e2"}},{"assign":{"path":"/n","value":{"add":[{"ctx":"/n"},{"lit":1}]}}}]}],"exit":[{"raise":{"event":"c"}}],"tags":["tagged"]},{"id":"s9","on":[{"event":"a.x","target":["#s5.s6.s7"],"actions":[{"raise":{"event":"i.j"}},{"assign":{"path":"/last","value":{"event":"/v"}}}]},{"event":"b","guard":{"any":[{"named":{"name":"even"}},{"in":"#s5.s10.s13"}]},"target":["#s1.s4"],"actions":[{"raise":{"event":"i.j","data":{"lit":{"v":"raised"}}}},{"emit":{"name":"e1"}}]}]}],"exit":[{"emit":{"name":"e2"}}]},{"id":"s10","kind":"compound","states":[{"id":"s11"},{"id":"s12","on":[{"event":"b","target":["#s5.s6.s7"]},{"event":"a.x","guard":{"cmp":{"left":{"ctx":"/n"},"op":"gt","right":{"lit":1}}},"target":["#s1.s2"],"actions":[{"assign":{"path":"/n","value":{"add":[{"ctx":"/n"},{"lit":1}]}}},{"emit":{"name":"e1","params":{"ctx":"/n"}}}]},{"event":"done.state.*","target":["#s5.s14.s15"]}]},{"id":"s13"}]},{"id":"s14","kind":"parallel","states":[{"id":"s15","on":[{"event":"a.*","guard":{"cmp":{"left":{"ctx":"/n"},"op":"gt","right":{"lit":2}}},"target":["#s1.s2"],"internal":true},{"event":"a.x","guard":{"cmp":{"left":{"ctx":"/n"},"op":"ne","right":{"lit":3}}},"target":["#s1.s3"]},{"event":"c","target":["#s5.s6"],"actions":[{"assign":{"path":"/last","value":{"event":"/v"}}}]}],"entry":[{"emit":{"name":"e0","params":{"ctx":"/n"}}}],"exit":[{"assign":{"path":"/n","value":{"add":[{"ctx":"/n"},{"lit":1}]}}},{"assign":{"path":"/last","value":{"event":"/v"}}}]},{"id":"s16","on":[{"event":"c","target":["#s5.s14.s16"],"actions":[{"schedule":{"id":"t1","event":"a","delay_ms":20}},{"raise":{"event":"c"}}]}]}],"on":[{"event":"b","target":["#s5.s14","#s1.s2"],"actions":[{"assign":{"path":"/seen/x","value":{"sub":[{"ctx":"/n"},{"lit":0.5}]}}},{"cancel":{"id":"t1"}}]}],"entry":[{"raise":{"event":"i.j","data":{"lit":{"v":"raised"}}}}]}],"on":[{"guard":{"cmp":{"left":{"ctx":"/n"},"op":"lt","right":{"lit":0}}},"target":["#s5.s10.s13"],"actions":[{"assign":{"path":"/n","value":{"add":[{"ctx":"/n"},{"lit":1}]}}},{"emit":{"name":"e0","params":{"ctx":"/n"}}}]},{"guard":{"cmp":{"left":{"ctx":"/n"},"op":"lt","right":{"lit":0}}},"target":["#s1.s4","#s5.s10"],"internal":true,"actions":[{"assign":{"path":"/n","value":{"add":[{"ctx":"/n"},{"lit":1}]}}},{"assign":{"path":"/n","value":{"add":[{"ctx":"/n"},{"lit":1}]}}}]}]}],"on":[{"event":"a","guard":{"any":[{"cmp":{"left":{"add":[{"ctx":"/last"},{"lit":1}]},"op":"gt","right":{"lit":1}}},{"any":[{"named":{"name":"odd"}},{"cmp":{"left":{"ctx":"/n"},"op":"ge","right":{"lit":2}}}]}]},"target":["#s5.s6"],"internal":true,"actions":[{"raise":{"event":"b","data":{"lit":{"v":"raised"}}}}]}],"exit":[{"emit":{"name":"e0","params":{"ctx":"/n"}}},{"assign":{"path":"/n","value":{"add":[{"ctx":"/n"},{"lit":1}]}}}]}}
+{
+  "schema": "foldstate/1",
+  "id": "generated",
+  "context": { "n": 0 },
+  "ignore": ["c", "tick.*"],
+  "max_microsteps": 40,
+  "root": {
+    "id": "root",
+    "kind": "parallel",
+    "states": [
+      {
+        "id": "s1",
+        "kind": "compound",
+        "states": [
+          {
+            "id": "s2",
+            "on": [
+              {
+                "event": "b",
+                "target": ["#s5.s10.s11"],
+                "actions": [
+                  {
+                    "assign": {
+                      "path": "/n",
+                      "value": { "add": [{ "ctx": "/n" }, { "lit": 1 }] }
+                    }
+                  }
+                ]
+              },
+              {
+                "event": "*",
+                "guard": { "named": { "name": "even" } },
+                "target": ["#s5.s6.s8"]
+              }
+            ]
+          },
+          { "id": "s4", "kind": "history", "default": ["#s1.s3"] },
+          {
+            "id": "s3",
+            "on": [
+              {
+                "event": "c",
+                "guard": {
+                  "cmp": {
+                    "left": { "ctx": "/n" },
+                    "op": "lt",
+                    "right": { "lit": 2 }
+                  }
+                },
+                "target": ["#s5.s14.s15"],
+                "actions": [
+                  { "assign": { "path": "/last", "value": { "event": "/v" } } },
+                  {
+                    "assign": {
+                      "path": "/seen/y~0",
+                      "value": { "sub": [{ "ctx": "/n" }, { "lit": 0.5 }] }
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "on": [
+          {
+            "event": "d",
+            "target": ["#s5.s6.s9"],
+            "actions": [{ "emit": { "name": "e2" } }]
+          }
+        ]
+      },
+      {
+        "id": "s5",
+        "kind": "compound",
+        "initial": "s10",
+        "states": [
+          {
+            "id": "s6",
+            "kind": "compound",
+            "states": [
+              { "id": "s7", "kind": "final" },
+              {
+                "id": "s8",
+                "on": [
+                  {
+                    "event": "a.x",
+                    "guard": { "not": { "in": "#s5.s14" } },
+                    "target": ["#s5.s14.s16"],
+                    "actions": [
+                      { "emit": { "name": "e2" } },
+                      {
+                        "assign": {
+                          "path": "/n",
+                          "value": { "add": [{ "ctx": "/n" }, { "lit": 1 }] }
+                        }
+                      }
+                    ]
+                  }
+                ],
+                "exit": [{ "raise": { "event": "c" } }],
+                "tags": ["tagged"]
+              },
+              {
+                "id": "s9",
+                "on": [
+                  {
+                    "event": "a.x",
+                    "target": ["#s5.s6.s7"],
+                    "actions": [
+                      { "raise": { "event": "i.j" } },
+                      {
+                        "assign": {
+                          "path": "/last",
+                          "value": { "event": "/v" }
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "event": "b",
+                    "guard": {
+                      "any": [
+                        { "named": { "name": "even" } },
+                        { "in": "#s5.s10.s13" }
+                      ]
+                    },
+                    "target": ["#s1.s4"],
+                    "actions": [
+                      {
+                        "raise": {
+                          "event": "i.j",
+                          "data": { "lit": { "v": "raised" } }
+                        }
+                      },
+                      { "emit": { "name": "e1" } }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "exit": [{ "emit": { "name": "e2" } }]
+          },
+          {
+            "id": "s10",
+            "kind": "compound",
+            "states": [
+              { "id": "s11" },
+              {
+                "id": "s12",
+                "on": [
+                  { "event": "b", "target": ["#s5.s6.s7"] },
+                  {
+                    "event": "a.x",
+                    "guard": {
+                      "cmp": {
+                        "left": { "ctx": "/n" },
+                        "op": "gt",
+                        "right": { "lit": 1 }
+                      }
+                    },
+                    "target": ["#s1.s2"],
+                    "actions": [
+                      {
+                        "assign": {
+                          "path": "/n",
+                          "value": { "add": [{ "ctx": "/n" }, { "lit": 1 }] }
+                        }
+                      },
+                      { "emit": { "name": "e1", "params": { "ctx": "/n" } } }
+                    ]
+                  },
+                  { "event": "done.state.*", "target": ["#s5.s14.s15"] }
+                ]
+              },
+              { "id": "s13" }
+            ]
+          },
+          {
+            "id": "s14",
+            "kind": "parallel",
+            "states": [
+              {
+                "id": "s15",
+                "on": [
+                  {
+                    "event": "a.*",
+                    "guard": {
+                      "cmp": {
+                        "left": { "ctx": "/n" },
+                        "op": "gt",
+                        "right": { "lit": 2 }
+                      }
+                    },
+                    "target": ["#s1.s2"],
+                    "internal": true
+                  },
+                  {
+                    "event": "a.x",
+                    "guard": {
+                      "cmp": {
+                        "left": { "ctx": "/n" },
+                        "op": "ne",
+                        "right": { "lit": 3 }
+                      }
+                    },
+                    "target": ["#s1.s3"]
+                  },
+                  {
+                    "event": "c",
+                    "target": ["#s5.s6"],
+                    "actions": [
+                      {
+                        "assign": {
+                          "path": "/last",
+                          "value": { "event": "/v" }
+                        }
+                      }
+                    ]
+                  }
+                ],
+                "entry": [
+                  { "emit": { "name": "e0", "params": { "ctx": "/n" } } }
+                ],
+                "exit": [
+                  {
+                    "assign": {
+                      "path": "/n",
+                      "value": { "add": [{ "ctx": "/n" }, { "lit": 1 }] }
+                    }
+                  },
+                  { "assign": { "path": "/last", "value": { "event": "/v" } } }
+                ]
+              },
+              {
+                "id": "s16",
+                "on": [
+                  {
+                    "event": "c",
+                    "target": ["#s5.s14.s16"],
+                    "actions": [
+                      {
+                        "schedule": { "id": "t1", "event": "a", "delay_ms": 20 }
+                      },
+                      { "raise": { "event": "c" } }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "on": [
+              {
+                "event": "b",
+                "target": ["#s5.s14", "#s1.s2"],
+                "actions": [
+                  {
+                    "assign": {
+                      "path": "/seen/x",
+                      "value": { "sub": [{ "ctx": "/n" }, { "lit": 0.5 }] }
+                    }
+                  },
+                  { "cancel": { "id": "t1" } }
+                ]
+              }
+            ],
+            "entry": [
+              {
+                "raise": {
+                  "event": "i.j",
+                  "data": { "lit": { "v": "raised" } }
+                }
+              }
+            ]
+          }
+        ],
+        "on": [
+          {
+            "guard": {
+              "cmp": {
+                "left": { "ctx": "/n" },
+                "op": "lt",
+                "right": { "lit": 0 }
+              }
+            },
+            "target": ["#s5.s10.s13"],
+            "actions": [
+              {
+                "assign": {
+                  "path": "/n",
+                  "value": { "add": [{ "ctx": "/n" }, { "lit": 1 }] }
+                }
+              },
+              { "emit": { "name": "e0", "params": { "ctx": "/n" } } }
+            ]
+          },
+          {
+            "guard": {
+              "cmp": {
+                "left": { "ctx": "/n" },
+                "op": "lt",
+                "right": { "lit": 0 }
+              }
+            },
+            "target": ["#s1.s4", "#s5.s10"],
+            "internal": true,
+            "actions": [
+              {
+                "assign": {
+                  "path": "/n",
+                  "value": { "add": [{ "ctx": "/n" }, { "lit": 1 }] }
+                }
+              },
+              {
+                "assign": {
+                  "path": "/n",
+                  "value": { "add": [{ "ctx": "/n" }, { "lit": 1 }] }
+                }
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "on": [
+      {
+        "event": "a",
+        "guard": {
+          "any": [
+            {
+              "cmp": {
+                "left": { "add": [{ "ctx": "/last" }, { "lit": 1 }] },
+                "op": "gt",
+                "right": { "lit": 1 }
+              }
+            },
+            {
+              "any": [
+                { "named": { "name": "odd" } },
+                {
+                  "cmp": {
+                    "left": { "ctx": "/n" },
+                    "op": "ge",
+                    "right": { "lit": 2 }
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        "target": ["#s5.s6"],
+        "internal": true,
+        "actions": [
+          { "raise": { "event": "b", "data": { "lit": { "v": "raised" } } } }
+        ]
+      }
+    ],
+    "exit": [
+      { "emit": { "name": "e0", "params": { "ctx": "/n" } } },
+      {
+        "assign": {
+          "path": "/n",
+          "value": { "add": [{ "ctx": "/n" }, { "lit": 1 }] }
+        }
+      }
+    ]
+  }
+}

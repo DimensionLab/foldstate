@@ -1,1 +1,100 @@
-{"definition":{"context":{"n":0},"id":"generated","ignore":["c","tick.*"],"max_microsteps":40,"root":{"id":"root","kind":"parallel","states":[{"id":"s1","on":[{"event":"b","target":["#s5.s6.s8"]}]},{"entry":[{"assign":{"path":"/n","value":{"add":[{"ctx":"/n"},{"lit":1}]}}}],"id":"s2","initial":"s4","kind":"compound","on":[{"actions":[{"assign":{"path":"/n","value":{"add":[{"ctx":"/n"},{"lit":1}]}}}],"event":"d","target":["#s5.s12"]}],"states":[{"id":"s3"},{"id":"s4","tags":["tagged"]}]},{"id":"s5","kind":"compound","states":[{"id":"s6","kind":"compound","on":[{"actions":[{"assign":{"path":"/n","value":{"add":[{"ctx":"/n"},{"lit":1}]}}},{"assign":{"path":"/n","value":{"add":[{"ctx":"/n"},{"lit":1}]}}}],"event":"d","target":["#s2.s4"]}],"states":[{"id":"s7"},{"id":"s8","kind":"final"},{"after":[{"delay_ms":100,"target":["#s5.s10"]}],"id":"s9","invoke":[{"name":"job","params":{"ctx":"/n"}}]}]},{"id":"s10","kind":"final"},{"id":"s11"},{"default":["#s5.s6.s8"],"id":"s12","kind":"history"}]}]},"schema":"foldstate/1"},"events":[{"at":0,"data":{"v":3},"name":"a"},{"at":1000,"name":"a"},{"at":2000,"data":{"v":3},"name":"c"},{"at":3000,"data":{"v":"text"},"name":"a.x"},{"at":4000,"data":{"v":1},"name":"a.x"},{"at":5000,"data":{"v":"text"},"name":"a.x"},{"at":6000,"data":{"v":1},"name":"b"},{"at":7000,"data":{"v":2},"name":"c"},{"at":8000,"data":{"v":3},"name":"a"},{"at":9000,"data":{"v":"text"},"name":"a"},{"at":10000,"data":{"v":"text"},"name":"a.x"},{"at":11000,"data":{"v":4},"name":"b"}]}
+{
+  "definition": {
+    "context": { "n": 0 },
+    "id": "generated",
+    "ignore": ["c", "tick.*"],
+    "max_microsteps": 40,
+    "root": {
+      "id": "root",
+      "kind": "parallel",
+      "states": [
+        { "id": "s1", "on": [{ "event": "b", "target": ["#s5.s6.s8"] }] },
+        {
+          "entry": [
+            {
+              "assign": {
+                "path": "/n",
+                "value": { "add": [{ "ctx": "/n" }, { "lit": 1 }] }
+              }
+            }
+          ],
+          "id": "s2",
+          "initial": "s4",
+          "kind": "compound",
+          "on": [
+            {
+              "actions": [
+                {
+                  "assign": {
+                    "path": "/n",
+                    "value": { "add": [{ "ctx": "/n" }, { "lit": 1 }] }
+                  }
+                }
+              ],
+              "event": "d",
+              "target": ["#s5.s12"]
+            }
+          ],
+          "states": [{ "id": "s3" }, { "id": "s4", "tags": ["tagged"] }]
+        },
+        {
+          "id": "s5",
+          "kind": "compound",
+          "states": [
+            {
+              "id": "s6",
+              "kind": "compound",
+              "on": [
+                {
+                  "actions": [
+                    {
+                      "assign": {
+                        "path": "/n",
+                        "value": { "add": [{ "ctx": "/n" }, { "lit": 1 }] }
+                      }
+                    },
+                    {
+                      "assign": {
+                        "path": "/n",
+                        "value": { "add": [{ "ctx": "/n" }, { "lit": 1 }] }
+                      }
+                    }
+                  ],
+                  "event": "d",
+                  "target": ["#s2.s4"]
+                }
+              ],
+              "states": [
+                { "id": "s7" },
+                { "id": "s8", "kind": "final" },
+                {
+                  "after": [{ "delay_ms": 100, "target": ["#s5.s10"] }],
+                  "id": "s9",
+                  "invoke": [{ "name": "job", "params": { "ctx": "/n" } }]
+                }
+              ]
+            },
+            { "id": "s10", "kind": "final" },
+            { "id": "s11" },
+            { "default": ["#s5.s6.s8"], "id": "s12", "kind": "history" }
+          ]
+        }
+      ]
+    },
+    "schema": "foldstate/1"
+  },
+  "events": [
+    { "at": 0, "data": { "v": 3 }, "name": "a" },
+    { "at": 1000, "name": "a" },
+    { "at": 2000, "data": { "v": 3 }, "name": "c" },
+    { "at": 3000, "data": { "v": "text" }, "name": "a.x" },
+    { "at": 4000, "data": { "v": 1 }, "name": "a.x" },
+    { "at": 5000, "data": { "v": "text" }, "name": "a.x" },
+    { "at": 6000, "data": { "v": 1 }, "name": "b" },
+    { "at": 7000, "data": { "v": 2 }, "name": "c" },
+    { "at": 8000, "data": { "v": 3 }, "name": "a" },
+    { "at": 9000, "data": { "v": "text" }, "name": "a" },
+    { "at": 10000, "data": { "v": "text" }, "name": "a.x" },
+    { "at": 11000, "data": { "v": 4 }, "name": "b" }
+  ]
+}

@@ -1,1 +1,113 @@
-{"schema":"foldstate/1","id":"generated","context":{"n":0},"unhandled":"ignore","max_microsteps":40,"root":{"id":"root","kind":"parallel","states":[{"id":"s1","kind":"compound","states":[{"id":"s2","on":[{"event":"c","target":["#s1.s3","#s4.s7"]},{"event":"a.x","guard":{"not":{"in":"#s4.s8"}},"target":["#s4","#s1.s3"],"internal":true,"actions":[{"raise":{"event":"a","data":{"lit":{"v":"raised"}}}}]}],"invoke":[{"name":"job","params":{"ctx":"/n"}}],"tags":["tagged"]},{"id":"s3","on":[{"event":"done.state.*","target":["#s4"],"actions":[{"assign":{"path":"/n","value":{"add":[{"ctx":"/n"},{"lit":1}]}}}]}]}]},{"id":"s4","kind":"compound","states":[{"id":"s8","kind":"history"},{"id":"s5","on":[{"event":"d","target":["#s1.s2"]}],"invoke":[{"name":"job","params":{"ctx":"/n"}}]},{"id":"s6","on":[{"event":"a.x"},{"event":"a.x","target":["#s1","#s4"],"internal":true}],"after":[{"delay_ms":100,"target":["#s1","#s4.s8"],"actions":[{"assign":{"path":"/seen/z~1w","value":{"sub":[{"ctx":"/n"},{"lit":0.5}]}}}]}]},{"id":"s7","kind":"final"}],"on":[{"event":"a","target":["#s4"],"internal":true,"actions":[{"assign":{"path":"/n","value":{"add":[{"ctx":"/n"},{"lit":1}]}}}]},{"event":"d","guard":{"in":"#s4"},"target":["#s1.s3"],"actions":[{"emit":{"name":"e1"}}]}]}]}}
+{
+  "schema": "foldstate/1",
+  "id": "generated",
+  "context": { "n": 0 },
+  "unhandled": "ignore",
+  "max_microsteps": 40,
+  "root": {
+    "id": "root",
+    "kind": "parallel",
+    "states": [
+      {
+        "id": "s1",
+        "kind": "compound",
+        "states": [
+          {
+            "id": "s2",
+            "on": [
+              { "event": "c", "target": ["#s1.s3", "#s4.s7"] },
+              {
+                "event": "a.x",
+                "guard": { "not": { "in": "#s4.s8" } },
+                "target": ["#s4", "#s1.s3"],
+                "internal": true,
+                "actions": [
+                  {
+                    "raise": {
+                      "event": "a",
+                      "data": { "lit": { "v": "raised" } }
+                    }
+                  }
+                ]
+              }
+            ],
+            "invoke": [{ "name": "job", "params": { "ctx": "/n" } }],
+            "tags": ["tagged"]
+          },
+          {
+            "id": "s3",
+            "on": [
+              {
+                "event": "done.state.*",
+                "target": ["#s4"],
+                "actions": [
+                  {
+                    "assign": {
+                      "path": "/n",
+                      "value": { "add": [{ "ctx": "/n" }, { "lit": 1 }] }
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "s4",
+        "kind": "compound",
+        "states": [
+          { "id": "s8", "kind": "history" },
+          {
+            "id": "s5",
+            "on": [{ "event": "d", "target": ["#s1.s2"] }],
+            "invoke": [{ "name": "job", "params": { "ctx": "/n" } }]
+          },
+          {
+            "id": "s6",
+            "on": [
+              { "event": "a.x" },
+              { "event": "a.x", "target": ["#s1", "#s4"], "internal": true }
+            ],
+            "after": [
+              {
+                "delay_ms": 100,
+                "target": ["#s1", "#s4.s8"],
+                "actions": [
+                  {
+                    "assign": {
+                      "path": "/seen/z~1w",
+                      "value": { "sub": [{ "ctx": "/n" }, { "lit": 0.5 }] }
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          { "id": "s7", "kind": "final" }
+        ],
+        "on": [
+          {
+            "event": "a",
+            "target": ["#s4"],
+            "internal": true,
+            "actions": [
+              {
+                "assign": {
+                  "path": "/n",
+                  "value": { "add": [{ "ctx": "/n" }, { "lit": 1 }] }
+                }
+              }
+            ]
+          },
+          {
+            "event": "d",
+            "guard": { "in": "#s4" },
+            "target": ["#s1.s3"],
+            "actions": [{ "emit": { "name": "e1" } }]
+          }
+        ]
+      }
+    ]
+  }
+}

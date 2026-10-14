@@ -1,1 +1,71 @@
-{"definition":{"context":{"n":0},"id":"generated","max_microsteps":40,"root":{"id":"root","kind":"compound","states":[{"exit":[{"assign":{"path":"/last","value":{"event":"/v"}}},{"assign":{"path":"/n/x","value":{"lit":1}}}],"id":"s1","invoke":[{"name":"job","params":{"ctx":"/n"}}],"on":[{"actions":[{"emit":{"name":"e1","params":{"ctx":"/n"}}}],"event":"c","target":["#s4"]},{"event":"b","target":["#s4"]}]},{"exit":[{"assign":{"path":"/seen/x","value":{"sub":[{"ctx":"/n"},{"lit":0.5}]}}},{"assign":{"path":"/seen/x","value":{"sub":[{"ctx":"/n"},{"lit":0.5}]}}}],"id":"s2","on":[{"event":"a.x","guard":{"in":"#s2"},"target":["#s4"]},{"event":"a.x","target":["#s3"]}]},{"default":["#s2"],"id":"s4","kind":"history"},{"id":"s3","kind":"final"}],"tags":["tagged"]},"schema":"foldstate/1","unhandled":"ignore"},"events":[{"at":0,"data":{"v":3},"name":"a.x"},{"data":{"v":"text"},"name":"c"},{"at":2000,"data":{"v":"text"},"name":"b"},{"name":"c"},{"at":4000,"name":"d"},{"at":5000,"name":"a.x"},{"at":6000,"data":{"v":4},"name":"a"},{"data":{"v":4},"name":"c"},{"at":8000,"data":{"v":"text"},"name":"b"},{"data":{"v":"text"},"name":"c"},{"at":10000,"data":{"v":"text"},"name":"a"},{"name":"a"}]}
+{
+  "definition": {
+    "context": { "n": 0 },
+    "id": "generated",
+    "max_microsteps": 40,
+    "root": {
+      "id": "root",
+      "kind": "compound",
+      "states": [
+        {
+          "exit": [
+            { "assign": { "path": "/last", "value": { "event": "/v" } } },
+            { "assign": { "path": "/n/x", "value": { "lit": 1 } } }
+          ],
+          "id": "s1",
+          "invoke": [{ "name": "job", "params": { "ctx": "/n" } }],
+          "on": [
+            {
+              "actions": [
+                { "emit": { "name": "e1", "params": { "ctx": "/n" } } }
+              ],
+              "event": "c",
+              "target": ["#s4"]
+            },
+            { "event": "b", "target": ["#s4"] }
+          ]
+        },
+        {
+          "exit": [
+            {
+              "assign": {
+                "path": "/seen/x",
+                "value": { "sub": [{ "ctx": "/n" }, { "lit": 0.5 }] }
+              }
+            },
+            {
+              "assign": {
+                "path": "/seen/x",
+                "value": { "sub": [{ "ctx": "/n" }, { "lit": 0.5 }] }
+              }
+            }
+          ],
+          "id": "s2",
+          "on": [
+            { "event": "a.x", "guard": { "in": "#s2" }, "target": ["#s4"] },
+            { "event": "a.x", "target": ["#s3"] }
+          ]
+        },
+        { "default": ["#s2"], "id": "s4", "kind": "history" },
+        { "id": "s3", "kind": "final" }
+      ],
+      "tags": ["tagged"]
+    },
+    "schema": "foldstate/1",
+    "unhandled": "ignore"
+  },
+  "events": [
+    { "at": 0, "data": { "v": 3 }, "name": "a.x" },
+    { "data": { "v": "text" }, "name": "c" },
+    { "at": 2000, "data": { "v": "text" }, "name": "b" },
+    { "name": "c" },
+    { "at": 4000, "name": "d" },
+    { "at": 5000, "name": "a.x" },
+    { "at": 6000, "data": { "v": 4 }, "name": "a" },
+    { "data": { "v": 4 }, "name": "c" },
+    { "at": 8000, "data": { "v": "text" }, "name": "b" },
+    { "data": { "v": "text" }, "name": "c" },
+    { "at": 10000, "data": { "v": "text" }, "name": "a" },
+    { "name": "a" }
+  ]
+}

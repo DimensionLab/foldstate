@@ -1,1 +1,91 @@
-{"schema":"foldstate/1","id":"generated","context":{"n":0},"ignore":["c","tick.*"],"max_microsteps":40,"root":{"id":"root","kind":"parallel","states":[{"id":"s1","on":[{"event":"b","target":["#s3"],"actions":[{"assign":{"path":"/n","value":{"add":[{"ctx":"/n"},{"lit":1}]}}}]},{"event":"a.x","target":["#s2"],"actions":[{"assign":{"path":"/last","value":{"event":"/v"}}}]}],"entry":[{"cancel":{"id":"t0"}}],"exit":[{"assign":{"path":"/n/x","value":{"lit":1}}}]},{"id":"s2","on":[{"event":"a.x","target":["#s2"],"actions":[{"assign":{"path":"/n","value":{"add":[{"ctx":"/n"},{"lit":1}]}}}]},{"event":"a d","target":["#s1"],"actions":[{"assign":{"path":"/n","value":{"add":[{"ctx":"/n"},{"lit":1}]}}},{"emit":{"name":"e0","params":{"ctx":"/n"}}}]}]},{"id":"s3","on":[{"event":"i","target":["#s2"]}],"exit":[{"emit":{"name":"e2","params":{"ctx":"/n"}}}]}],"on":[{"guard":{"cmp":{"left":{"ctx":"/n"},"op":"lt","right":{"lit":1}}},"target":["#s1"],"actions":[{"assign":{"path":"/n","value":{"add":[{"ctx":"/n"},{"lit":1}]}}},{"schedule":{"id":"t0","event":"tick","delay_ms":10}}]}]}}
+{
+  "schema": "foldstate/1",
+  "id": "generated",
+  "context": { "n": 0 },
+  "ignore": ["c", "tick.*"],
+  "max_microsteps": 40,
+  "root": {
+    "id": "root",
+    "kind": "parallel",
+    "states": [
+      {
+        "id": "s1",
+        "on": [
+          {
+            "event": "b",
+            "target": ["#s3"],
+            "actions": [
+              {
+                "assign": {
+                  "path": "/n",
+                  "value": { "add": [{ "ctx": "/n" }, { "lit": 1 }] }
+                }
+              }
+            ]
+          },
+          {
+            "event": "a.x",
+            "target": ["#s2"],
+            "actions": [
+              { "assign": { "path": "/last", "value": { "event": "/v" } } }
+            ]
+          }
+        ],
+        "entry": [{ "cancel": { "id": "t0" } }],
+        "exit": [{ "assign": { "path": "/n/x", "value": { "lit": 1 } } }]
+      },
+      {
+        "id": "s2",
+        "on": [
+          {
+            "event": "a.x",
+            "target": ["#s2"],
+            "actions": [
+              {
+                "assign": {
+                  "path": "/n",
+                  "value": { "add": [{ "ctx": "/n" }, { "lit": 1 }] }
+                }
+              }
+            ]
+          },
+          {
+            "event": "a d",
+            "target": ["#s1"],
+            "actions": [
+              {
+                "assign": {
+                  "path": "/n",
+                  "value": { "add": [{ "ctx": "/n" }, { "lit": 1 }] }
+                }
+              },
+              { "emit": { "name": "e0", "params": { "ctx": "/n" } } }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "s3",
+        "on": [{ "event": "i", "target": ["#s2"] }],
+        "exit": [{ "emit": { "name": "e2", "params": { "ctx": "/n" } } }]
+      }
+    ],
+    "on": [
+      {
+        "guard": {
+          "cmp": { "left": { "ctx": "/n" }, "op": "lt", "right": { "lit": 1 } }
+        },
+        "target": ["#s1"],
+        "actions": [
+          {
+            "assign": {
+              "path": "/n",
+              "value": { "add": [{ "ctx": "/n" }, { "lit": 1 }] }
+            }
+          },
+          { "schedule": { "id": "t0", "event": "tick", "delay_ms": 10 } }
+        ]
+      }
+    ]
+  }
+}

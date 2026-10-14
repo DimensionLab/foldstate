@@ -1,1 +1,84 @@
-{"schema":"foldstate/1","id":"generated","context":{"n":0},"ignore":["c","tick.*"],"max_microsteps":40,"root":{"id":"root","kind":"parallel","states":[{"id":"s1","on":[{"event":"b","target":["#s5.s6.s8"]}]},{"id":"s2","kind":"compound","initial":"s4","states":[{"id":"s3"},{"id":"s4","tags":["tagged"]}],"on":[{"event":"d","target":["#s5.s12"],"actions":[{"assign":{"path":"/n","value":{"add":[{"ctx":"/n"},{"lit":1}]}}}]}],"entry":[{"assign":{"path":"/n","value":{"add":[{"ctx":"/n"},{"lit":1}]}}}]},{"id":"s5","kind":"compound","states":[{"id":"s6","kind":"compound","states":[{"id":"s7"},{"id":"s8","kind":"final"},{"id":"s9","after":[{"delay_ms":100,"target":["#s5.s10"]}],"invoke":[{"name":"job","params":{"ctx":"/n"}}]}],"on":[{"event":"d","target":["#s2.s4"],"actions":[{"assign":{"path":"/n","value":{"add":[{"ctx":"/n"},{"lit":1}]}}},{"assign":{"path":"/n","value":{"add":[{"ctx":"/n"},{"lit":1}]}}}]}]},{"id":"s10","kind":"final"},{"id":"s11"},{"id":"s12","kind":"history","default":["#s5.s6.s8"]}]}]}}
+{
+  "schema": "foldstate/1",
+  "id": "generated",
+  "context": { "n": 0 },
+  "ignore": ["c", "tick.*"],
+  "max_microsteps": 40,
+  "root": {
+    "id": "root",
+    "kind": "parallel",
+    "states": [
+      { "id": "s1", "on": [{ "event": "b", "target": ["#s5.s6.s8"] }] },
+      {
+        "id": "s2",
+        "kind": "compound",
+        "initial": "s4",
+        "states": [{ "id": "s3" }, { "id": "s4", "tags": ["tagged"] }],
+        "on": [
+          {
+            "event": "d",
+            "target": ["#s5.s12"],
+            "actions": [
+              {
+                "assign": {
+                  "path": "/n",
+                  "value": { "add": [{ "ctx": "/n" }, { "lit": 1 }] }
+                }
+              }
+            ]
+          }
+        ],
+        "entry": [
+          {
+            "assign": {
+              "path": "/n",
+              "value": { "add": [{ "ctx": "/n" }, { "lit": 1 }] }
+            }
+          }
+        ]
+      },
+      {
+        "id": "s5",
+        "kind": "compound",
+        "states": [
+          {
+            "id": "s6",
+            "kind": "compound",
+            "states": [
+              { "id": "s7" },
+              { "id": "s8", "kind": "final" },
+              {
+                "id": "s9",
+                "after": [{ "delay_ms": 100, "target": ["#s5.s10"] }],
+                "invoke": [{ "name": "job", "params": { "ctx": "/n" } }]
+              }
+            ],
+            "on": [
+              {
+                "event": "d",
+                "target": ["#s2.s4"],
+                "actions": [
+                  {
+                    "assign": {
+                      "path": "/n",
+                      "value": { "add": [{ "ctx": "/n" }, { "lit": 1 }] }
+                    }
+                  },
+                  {
+                    "assign": {
+                      "path": "/n",
+                      "value": { "add": [{ "ctx": "/n" }, { "lit": 1 }] }
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          { "id": "s10", "kind": "final" },
+          { "id": "s11" },
+          { "id": "s12", "kind": "history", "default": ["#s5.s6.s8"] }
+        ]
+      }
+    ]
+  }
+}

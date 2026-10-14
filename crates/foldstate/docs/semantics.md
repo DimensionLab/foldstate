@@ -1,4 +1,5 @@
 <!-- SPDX-License-Identifier: Apache-2.0 -->
+
 # Semantics
 
 This page defines what a definition means: which states are active after an event, in what
@@ -13,13 +14,13 @@ A definition is a tree of states with one root. A state has an `id` unique among
 siblings; its **path** is the ids from the root's child down, joined with `.`. The root's own
 `id` is not part of any path, and the root's path is the empty string.
 
-| Kind | Meaning |
-|---|---|
-| `atomic` | No child states. |
-| `compound` | While active, exactly one child state is active. `initial` names the child entered by default; when absent, the first child. |
-| `parallel` | While active, every child state is active. Each child is a region. |
-| `final` | A final state of its compound parent. It has no transitions. |
-| `history` | A pseudo-state of a compound or parallel parent. A transition that targets it re-enters what was active the last time the parent was exited. `deep: true` remembers the full active sub-configuration, otherwise the direct children. Before the parent has been exited once, `default` is used, or the parent's default entry when `default` is empty. |
+| Kind       | Meaning                                                                                                                                                                                                                                                                                                                                                 |
+| ---------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `atomic`   | No child states.                                                                                                                                                                                                                                                                                                                                        |
+| `compound` | While active, exactly one child state is active. `initial` names the child entered by default; when absent, the first child.                                                                                                                                                                                                                            |
+| `parallel` | While active, every child state is active. Each child is a region.                                                                                                                                                                                                                                                                                      |
+| `final`    | A final state of its compound parent. It has no transitions.                                                                                                                                                                                                                                                                                            |
+| `history`  | A pseudo-state of a compound or parallel parent. A transition that targets it re-enters what was active the last time the parent was exited. `deep: true` remembers the full active sub-configuration, otherwise the direct children. Before the parent has been exited once, `default` is used, or the parent's default entry when `default` is empty. |
 
 When `kind` is absent a state with children is `compound` and one without is `atomic`. The
 root is `compound` or `parallel`.
@@ -30,11 +31,11 @@ root is `compound` or `parallel`.
 
 Transition targets, history defaults and `in` guards refer to states:
 
-| Form | Refers to |
-|---|---|
-| `name` | The sibling `name` of the state that holds the reference. |
+| Form   | Refers to                                                   |
+| ------ | ----------------------------------------------------------- |
+| `name` | The sibling `name` of the state that holds the reference.   |
 | `.a.b` | The descendant `a.b` of the state that holds the reference. |
-| `#a.b` | The state with path `a.b`. |
+| `#a.b` | The state with path `a.b`.                                  |
 
 A transition with several targets enters several regions at once: its targets must lie in
 different regions of a parallel state, and none may contain another. A history state counts
@@ -45,23 +46,23 @@ as its parent here. A transition cannot target the root.
 An event has a `name`, optional `data` and an optional time `at` in milliseconds. A
 transition's `event` is a space-separated list of descriptors:
 
-| Descriptor | Matches |
-|---|---|
-| `step.done` | The event named `step.done`, and no other. |
-| `step.*` | `step` and every name that continues it after a dot: `step.done`, `step.done.late`. Not `stepper`. |
-| `*` | Every event. |
+| Descriptor  | Matches                                                                                            |
+| ----------- | -------------------------------------------------------------------------------------------------- |
+| `step.done` | The event named `step.done`, and no other.                                                         |
+| `step.*`    | `step` and every name that continues it after a dot: `step.done`, `step.done.late`. Not `stepper`. |
+| `*`         | Every event.                                                                                       |
 
 A transition without `event` is **eventless**: it is taken as soon as its source is active
 and its guard holds.
 
 ### Guards
 
-| Guard | True when |
-|---|---|
-| `{"in": ref}` | The state is active. |
-| `{"not": g}`, `{"all": [g…]}`, `{"any": [g…]}` | As named. `all` of nothing is true, `any` of nothing is false. |
-| `{"cmp": {"left": e, "op": o, "right": e}}` | `eq`, `ne`: numbers compare by value (`1` equals `1.0`), everything else structurally. `lt`, `le`, `gt`, `ge`: two numbers, two strings or two booleans; false for anything else. |
-| `{"named": {"name": n, "params": v}}` | The host's guard `n` returns true for `(params, context, event)`. |
+| Guard                                          | True when                                                                                                                                                                         |
+| ---------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `{"in": ref}`                                  | The state is active.                                                                                                                                                              |
+| `{"not": g}`, `{"all": [g…]}`, `{"any": [g…]}` | As named. `all` of nothing is true, `any` of nothing is false.                                                                                                                    |
+| `{"cmp": {"left": e, "op": o, "right": e}}`    | `eq`, `ne`: numbers compare by value (`1` equals `1.0`), everything else structurally. `lt`, `le`, `gt`, `ge`: two numbers, two strings or two booleans; false for anything else. |
+| `{"named": {"name": n, "params": v}}`          | The host's guard `n` returns true for `(params, context, event)`.                                                                                                                 |
 
 A guard that cannot be evaluated (arithmetic on something that is not a number, a named
 guard the host does not have) is **false**. Guards never fail a step, so the order in which
@@ -81,13 +82,13 @@ the result must be finite.
 
 Actions run on exit, on a transition and on entry. They perform no I/O.
 
-| Action | Effect |
-|---|---|
-| `assign {path, value}` | Sets the context value at `path`, creating missing objects. An existing array element can be replaced; arrays do not grow. |
-| `raise {event, data?}` | Appends an event to the internal queue. |
-| `emit {name, params?}` | Produces the effect `emit` for the host. |
-| `schedule {id, event, delay_ms}` | Records timer `id` and produces the effect `schedule`. An existing timer with the same id is replaced. |
-| `cancel {id}` | Removes timer `id` and produces the effect `cancel`, when the timer is pending. |
+| Action                           | Effect                                                                                                                     |
+| -------------------------------- | -------------------------------------------------------------------------------------------------------------------------- |
+| `assign {path, value}`           | Sets the context value at `path`, creating missing objects. An existing array element can be replaced; arrays do not grow. |
+| `raise {event, data?}`           | Appends an event to the internal queue.                                                                                    |
+| `emit {name, params?}`           | Produces the effect `emit` for the host.                                                                                   |
+| `schedule {id, event, delay_ms}` | Records timer `id` and produces the effect `schedule`. An existing timer with the same id is replaced.                     |
+| `cancel {id}`                    | Removes timer `id` and produces the effect `cancel`, when the timer is pending.                                            |
 
 An action that fails (overflow, a write through something that is not an object) fails the
 whole step: the snapshot is unchanged and the error names the event.
@@ -241,11 +242,11 @@ compiled from a different definition refuses it.
 
 Three serialised forms, each naming its version:
 
-| Form | `schema` | Covers |
-|---|---|---|
-| Definition | `foldstate/1` | States, transitions, guards, expressions, actions. |
-| Snapshot | `foldstate-snapshot/1` | Configuration, history, context, timers, invocations, status. |
-| Log | `foldstate-log/1` | Branches and entries: what happened, ops, effects, transitions taken, guard results. |
+| Form       | `schema`               | Covers                                                                               |
+| ---------- | ---------------------- | ------------------------------------------------------------------------------------ |
+| Definition | `foldstate/1`          | States, transitions, guards, expressions, actions.                                   |
+| Snapshot   | `foldstate-snapshot/1` | Configuration, history, context, timers, invocations, status.                        |
+| Log        | `foldstate-log/1`      | Branches and entries: what happened, ops, effects, transitions taken, guard results. |
 
 A number changes when a document written under the old one would be read differently or
 refused. Fields may be added within a version only when their absence means what it meant
@@ -254,45 +255,45 @@ fixed example are kept in `tests/golden/` and compared on every test run.
 
 ## Differences from SCXML
 
-| SCXML | Here |
-|---|---|
-| ECMAScript, XPath or null data model; `<script>` | The guard, expression and action forms above. |
-| A condition that fails raises `error.execution` | The guard is false. |
-| Executable content that fails raises `error.execution` and the rest of the block is skipped | The step fails and changes nothing. |
-| A descriptor matches every event name it is a prefix of (`error` matches `error.send`) | A descriptor matches its own name only; prefix matching is written `error.*`. State paths contain dots, so `done.state.a` must not match `done.state.a.b`. |
-| Any event can be sent from outside, including `done.state.*` | `done.state.*` and the events of `after` timers that are not pending are not accepted from outside. |
-| An event that enables nothing is dropped | External events are rejected unless ignored by the definition; internal events are dropped. |
-| `<scxml>` has no transitions and cannot be parallel | The root can hold transitions (its domain is the root) and can be parallel. |
-| On completion all states are exited and their `onexit` runs | The configuration is kept; invocations are stopped and timers cancelled. |
-| `<invoke>` starts a session and exchanges events with it | `start` and `stop` effects; the host connects the two machines. |
-| `<send>` with delay, targets and I/O processors | `schedule` and `cancel` with timers in the snapshot; `emit` for everything else. |
-| `<initial>` and history defaults can hold executable content; `initial` can name deep descendants | `initial` names a child; neither holds actions. |
-| `done.state` events carry `<donedata>` | No data. |
-| A state in the entry set that was not exited (reachable through a history state of an ancestor, targeted from inside it) runs its `onentry` again | A state that is already active is not entered again. |
-| `<final>` under `<scxml>` only | Also: a parallel root is done when all its regions are in a final state. |
-| Invocations of a state are started before eventless processing continues if the queue is non-empty | Started once, at the end of the macrostep. |
+| SCXML                                                                                                                                             | Here                                                                                                                                                       |
+| ------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| ECMAScript, XPath or null data model; `<script>`                                                                                                  | The guard, expression and action forms above.                                                                                                              |
+| A condition that fails raises `error.execution`                                                                                                   | The guard is false.                                                                                                                                        |
+| Executable content that fails raises `error.execution` and the rest of the block is skipped                                                       | The step fails and changes nothing.                                                                                                                        |
+| A descriptor matches every event name it is a prefix of (`error` matches `error.send`)                                                            | A descriptor matches its own name only; prefix matching is written `error.*`. State paths contain dots, so `done.state.a` must not match `done.state.a.b`. |
+| Any event can be sent from outside, including `done.state.*`                                                                                      | `done.state.*` and the events of `after` timers that are not pending are not accepted from outside.                                                        |
+| An event that enables nothing is dropped                                                                                                          | External events are rejected unless ignored by the definition; internal events are dropped.                                                                |
+| `<scxml>` has no transitions and cannot be parallel                                                                                               | The root can hold transitions (its domain is the root) and can be parallel.                                                                                |
+| On completion all states are exited and their `onexit` runs                                                                                       | The configuration is kept; invocations are stopped and timers cancelled.                                                                                   |
+| `<invoke>` starts a session and exchanges events with it                                                                                          | `start` and `stop` effects; the host connects the two machines.                                                                                            |
+| `<send>` with delay, targets and I/O processors                                                                                                   | `schedule` and `cancel` with timers in the snapshot; `emit` for everything else.                                                                           |
+| `<initial>` and history defaults can hold executable content; `initial` can name deep descendants                                                 | `initial` names a child; neither holds actions.                                                                                                            |
+| `done.state` events carry `<donedata>`                                                                                                            | No data.                                                                                                                                                   |
+| A state in the entry set that was not exited (reachable through a history state of an ancestor, targeted from inside it) runs its `onentry` again | A state that is already active is not entered again.                                                                                                       |
+| `<final>` under `<scxml>` only                                                                                                                    | Also: a parallel root is done when all its regions are in a final state.                                                                                   |
+| Invocations of a state are started before eventless processing continues if the queue is non-empty                                                | Started once, at the end of the macrostep.                                                                                                                 |
 
 ## Differences from XState v5
 
 Found by running generated statecharts through both (`tests/xstate.rs`). Where SCXML and
 XState differ, foldstate follows SCXML.
 
-| XState v5 | Here |
-|---|---|
+| XState v5                                                                                        | Here                                                                                                                                                                                                                 |
+| ------------------------------------------------------------------------------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | The domain of a transition is the nearest common ancestor of its source and targets, of any kind | The nearest one that is a compound state (or the root), as in SCXML: a transition out of a region to a state outside it exits and re-enters the whole parallel state, and everything else below that compound state. |
-| In a parallel state, a transition of an ancestor is not taken once any region handles the event | Every active atomic state looks for a transition on its own, as in SCXML: the ancestor's transition is taken for the regions that have none, unless it conflicts with one already chosen. |
-| `reenter: false` on a transition whose target is its own atomic source skips exit and entry | `internal` has an effect only when the source is compound and every target is a proper descendant of it, as in SCXML. |
-| When the machine finishes, every state is exited and exit actions run | The configuration is kept and no exit action runs. |
-| An event that enables nothing is dropped | External events are rejected unless the definition ignores them. |
-| A transition on the root can re-enter the root | The root is never exited or entered. |
-| Completion events are named `xstate.done.state.<id>` | `done.state.<path>`. |
+| In a parallel state, a transition of an ancestor is not taken once any region handles the event  | Every active atomic state looks for a transition on its own, as in SCXML: the ancestor's transition is taken for the regions that have none, unless it conflicts with one already chosen.                            |
+| `reenter: false` on a transition whose target is its own atomic source skips exit and entry      | `internal` has an effect only when the source is compound and every target is a proper descendant of it, as in SCXML.                                                                                                |
+| When the machine finishes, every state is exited and exit actions run                            | The configuration is kept and no exit action runs.                                                                                                                                                                   |
+| An event that enables nothing is dropped                                                         | External events are rejected unless the definition ignores them.                                                                                                                                                     |
+| A transition on the root can re-enter the root                                                   | The root is never exited or entered.                                                                                                                                                                                 |
+| Completion events are named `xstate.done.state.<id>`                                             | `done.state.<path>`.                                                                                                                                                                                                 |
 
 With these left out of the generated machines, 9998 of 10 000 cases (253 872 events) give
 the same active states and context after every event. The two that differ are instances of
 one more difference:
 
-| XState v5 | Here |
-|---|---|
+| XState v5                                                                                   | Here                                                                                                                                                                                           |
+| ------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | When two enabled transitions conflict, the one whose atomic state was entered first is kept | The one whose atomic state comes first in the document is kept, as in SCXML. The results differ once a state has been exited and entered again, because it then comes later in XState's order. |
 
 The smallest machine that shows it is in `tests/xstate.rs`.

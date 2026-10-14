@@ -1,1 +1,169 @@
-{"definition":{"context":{"n":0},"id":"generated","max_microsteps":40,"root":{"id":"root","kind":"parallel","on":[{"event":"*","target":["#s2.s6"]}],"states":[{"exit":[{"assign":{"path":"/n","value":{"add":[{"ctx":"/n"},{"lit":1}]}}}],"id":"s1","on":[{"event":"a.x","guard":{"not":{"in":"#s1"}},"target":["#s2.s3.s5"]},{"actions":[{"assign":{"path":"/n","value":{"add":[{"ctx":"/n"},{"lit":1}]}}}],"event":"a a","target":["#s2.s3"]}]},{"id":"s2","kind":"parallel","on":[{"event":"*","internal":true,"target":["#s2"]},{"event":"done.state.*","target":["#s2.s6"]}],"states":[{"exit":[{"assign":{"path":"/n","value":{"add":[{"ctx":"/n"},{"lit":1}]}}}],"id":"s3","kind":"compound","states":[{"id":"s4","on":[{"actions":[{"assign":{"path":"/n","value":{"add":[{"ctx":"/n"},{"lit":1}]}}}],"event":"a.x","guard":{"in":"#s2"},"internal":true,"target":["#s2.s7.s9"]}]},{"id":"s5"}]},{"entry":[{"schedule":{"delay_ms":10,"event":"a","id":"t2"}},{"assign":{"path":"/n","value":{"add":[{"ctx":"/n"},{"lit":1}]}}}],"id":"s6"},{"entry":[{"assign":{"path":"/last","value":{"event":"/v"}}},{"assign":{"path":"/n","value":{"add":[{"ctx":"/n"},{"lit":1}]}}}],"id":"s7","kind":"compound","states":[{"id":"s8","on":[{"actions":[{"assign":{"path":"/n","value":{"add":[{"ctx":"/n"},{"lit":1}]}}}],"event":"a.x","internal":true,"target":["#s2.s6","#s2.s7"]}]},{"id":"s9","on":[{"actions":[{"assign":{"path":"/seen/y~0","value":{"sub":[{"ctx":"/n"},{"lit":0.5}]}}},{"emit":{"name":"e1","params":{"ctx":"/n"}}}],"guard":{"in":"#s2.s7.s9"},"target":["#s1"]}]}]}]}]},"schema":"foldstate/1","unhandled":"ignore"},"events":[{"data":{"v":0},"name":"c"},{"name":"d"},{"data":{"v":3},"name":"d"},{"data":{"v":2},"name":"a"},{"data":{"v":3},"name":"c"},{"at":5000,"data":{"v":3},"name":"a"},{"at":6000,"data":{"v":1},"name":"a.x"},{"data":{"v":2},"name":"c"},{"at":8000,"data":{"v":"text"},"name":"d"},{"data":{"v":2},"name":"a"},{"at":10000,"data":{"v":1},"name":"a"},{"name":"c"}]}
+{
+  "definition": {
+    "context": { "n": 0 },
+    "id": "generated",
+    "max_microsteps": 40,
+    "root": {
+      "id": "root",
+      "kind": "parallel",
+      "on": [{ "event": "*", "target": ["#s2.s6"] }],
+      "states": [
+        {
+          "exit": [
+            {
+              "assign": {
+                "path": "/n",
+                "value": { "add": [{ "ctx": "/n" }, { "lit": 1 }] }
+              }
+            }
+          ],
+          "id": "s1",
+          "on": [
+            {
+              "event": "a.x",
+              "guard": { "not": { "in": "#s1" } },
+              "target": ["#s2.s3.s5"]
+            },
+            {
+              "actions": [
+                {
+                  "assign": {
+                    "path": "/n",
+                    "value": { "add": [{ "ctx": "/n" }, { "lit": 1 }] }
+                  }
+                }
+              ],
+              "event": "a a",
+              "target": ["#s2.s3"]
+            }
+          ]
+        },
+        {
+          "id": "s2",
+          "kind": "parallel",
+          "on": [
+            { "event": "*", "internal": true, "target": ["#s2"] },
+            { "event": "done.state.*", "target": ["#s2.s6"] }
+          ],
+          "states": [
+            {
+              "exit": [
+                {
+                  "assign": {
+                    "path": "/n",
+                    "value": { "add": [{ "ctx": "/n" }, { "lit": 1 }] }
+                  }
+                }
+              ],
+              "id": "s3",
+              "kind": "compound",
+              "states": [
+                {
+                  "id": "s4",
+                  "on": [
+                    {
+                      "actions": [
+                        {
+                          "assign": {
+                            "path": "/n",
+                            "value": { "add": [{ "ctx": "/n" }, { "lit": 1 }] }
+                          }
+                        }
+                      ],
+                      "event": "a.x",
+                      "guard": { "in": "#s2" },
+                      "internal": true,
+                      "target": ["#s2.s7.s9"]
+                    }
+                  ]
+                },
+                { "id": "s5" }
+              ]
+            },
+            {
+              "entry": [
+                { "schedule": { "delay_ms": 10, "event": "a", "id": "t2" } },
+                {
+                  "assign": {
+                    "path": "/n",
+                    "value": { "add": [{ "ctx": "/n" }, { "lit": 1 }] }
+                  }
+                }
+              ],
+              "id": "s6"
+            },
+            {
+              "entry": [
+                { "assign": { "path": "/last", "value": { "event": "/v" } } },
+                {
+                  "assign": {
+                    "path": "/n",
+                    "value": { "add": [{ "ctx": "/n" }, { "lit": 1 }] }
+                  }
+                }
+              ],
+              "id": "s7",
+              "kind": "compound",
+              "states": [
+                {
+                  "id": "s8",
+                  "on": [
+                    {
+                      "actions": [
+                        {
+                          "assign": {
+                            "path": "/n",
+                            "value": { "add": [{ "ctx": "/n" }, { "lit": 1 }] }
+                          }
+                        }
+                      ],
+                      "event": "a.x",
+                      "internal": true,
+                      "target": ["#s2.s6", "#s2.s7"]
+                    }
+                  ]
+                },
+                {
+                  "id": "s9",
+                  "on": [
+                    {
+                      "actions": [
+                        {
+                          "assign": {
+                            "path": "/seen/y~0",
+                            "value": {
+                              "sub": [{ "ctx": "/n" }, { "lit": 0.5 }]
+                            }
+                          }
+                        },
+                        { "emit": { "name": "e1", "params": { "ctx": "/n" } } }
+                      ],
+                      "guard": { "in": "#s2.s7.s9" },
+                      "target": ["#s1"]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "schema": "foldstate/1",
+    "unhandled": "ignore"
+  },
+  "events": [
+    { "data": { "v": 0 }, "name": "c" },
+    { "name": "d" },
+    { "data": { "v": 3 }, "name": "d" },
+    { "data": { "v": 2 }, "name": "a" },
+    { "data": { "v": 3 }, "name": "c" },
+    { "at": 5000, "data": { "v": 3 }, "name": "a" },
+    { "at": 6000, "data": { "v": 1 }, "name": "a.x" },
+    { "data": { "v": 2 }, "name": "c" },
+    { "at": 8000, "data": { "v": "text" }, "name": "d" },
+    { "data": { "v": 2 }, "name": "a" },
+    { "at": 10000, "data": { "v": 1 }, "name": "a" },
+    { "name": "c" }
+  ]
+}

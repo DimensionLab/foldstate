@@ -1,1 +1,220 @@
-{"definition":{"context":{"n":0},"id":"generated","ignore":["c","tick.*"],"max_microsteps":40,"root":{"id":"root","initial":"s5","kind":"compound","on":[{"event":"d","target":["#s1.s2"]}],"states":[{"id":"s1","kind":"compound","on":[{"actions":[{"assign":{"path":"/n","value":{"add":[{"ctx":"/n"},{"lit":1}]}}},{"emit":{"name":"e1"}}],"event":"c","target":["#s1.s4"]}],"states":[{"id":"s2","on":[{"actions":[{"emit":{"name":"e2","params":{"ctx":"/n"}}}],"event":"a","target":["#s5.s6"]},{"event":"a a.x","target":["#s1.s3"]},{"actions":[{"assign":{"path":"/n","value":{"add":[{"ctx":"/n"},{"lit":1}]}}},{"raise":{"event":"d"}}],"event":"i"}]},{"id":"s3","kind":"final"},{"entry":[{"assign":{"path":"/seen/x","value":{"sub":[{"ctx":"/n"},{"lit":0.5}]}}}],"id":"s4","kind":"final","tags":["tagged"]}]},{"entry":[{"schedule":{"delay_ms":40,"event":"a","id":"t0"}}],"id":"s5","kind":"parallel","on":[{"actions":[{"assign":{"path":"/n","value":{"add":[{"ctx":"/n"},{"lit":1}]}}},{"emit":{"name":"e0"}}],"guard":{"cmp":{"left":{"ctx":"/n"},"op":"lt","right":{"lit":5}}},"internal":true,"target":["#s1"]},{"actions":[{"assign":{"path":"/n","value":{"add":[{"ctx":"/n"},{"lit":1}]}}},{"assign":{"path":"/n","value":{"add":[{"ctx":"/n"},{"lit":1}]}}}],"event":"c","guard":{"any":[{"named":{"name":"even"}},{"cmp":{"left":{"ctx":"/n"},"op":"eq","right":{"lit":0}}}]},"target":["#s5"]}],"states":[{"id":"s6","on":[{"actions":[{"assign":{"path":"/last","value":{"event":"/v"}}}],"event":"a.*","target":["#s1.s2"]},{"actions":[{"emit":{"name":"e0","params":{"ctx":"/n"}}}],"event":"c","guard":{"in":"#s1.s3"},"target":["#s5.s7"]},{"actions":[{"assign":{"path":"/n","value":{"add":[{"ctx":"/n"},{"lit":1}]}}},{"schedule":{"delay_ms":30,"event":"tick","id":"t1"}},{"assign":{"path":"/n","value":{"add":[{"ctx":"/n"},{"lit":1}]}}}],"guard":{"cmp":{"left":{"ctx":"/n"},"op":"lt","right":{"lit":3}}},"target":["#s1"]}]},{"after":[{"actions":[{"assign":{"path":"/last","value":{"event":"/v"}}}],"delay_ms":100,"target":["#s5.s6"]}],"id":"s7","on":[{"event":"a.*","target":["#s5"]}]}]}]},"schema":"foldstate/1"},"events":[{"at":0,"data":{"v":4},"name":"c"},{"at":1000,"data":{"v":2},"name":"d"},{"at":2000,"name":"a"},{"data":{"v":1},"name":"c"},{"at":4000,"data":{"v":3},"name":"b"},{"at":5000,"data":{"v":4},"name":"c"},{"data":{"v":1},"name":"a.x"},{"at":7000,"data":{"v":4},"name":"c"},{"at":8000,"data":{"v":1},"name":"a"},{"data":{"v":"text"},"name":"a.x"},{"at":10000,"name":"a.x"},{"at":11000,"data":{"v":2},"name":"b"}]}
+{
+  "definition": {
+    "context": { "n": 0 },
+    "id": "generated",
+    "ignore": ["c", "tick.*"],
+    "max_microsteps": 40,
+    "root": {
+      "id": "root",
+      "initial": "s5",
+      "kind": "compound",
+      "on": [{ "event": "d", "target": ["#s1.s2"] }],
+      "states": [
+        {
+          "id": "s1",
+          "kind": "compound",
+          "on": [
+            {
+              "actions": [
+                {
+                  "assign": {
+                    "path": "/n",
+                    "value": { "add": [{ "ctx": "/n" }, { "lit": 1 }] }
+                  }
+                },
+                { "emit": { "name": "e1" } }
+              ],
+              "event": "c",
+              "target": ["#s1.s4"]
+            }
+          ],
+          "states": [
+            {
+              "id": "s2",
+              "on": [
+                {
+                  "actions": [
+                    { "emit": { "name": "e2", "params": { "ctx": "/n" } } }
+                  ],
+                  "event": "a",
+                  "target": ["#s5.s6"]
+                },
+                { "event": "a a.x", "target": ["#s1.s3"] },
+                {
+                  "actions": [
+                    {
+                      "assign": {
+                        "path": "/n",
+                        "value": { "add": [{ "ctx": "/n" }, { "lit": 1 }] }
+                      }
+                    },
+                    { "raise": { "event": "d" } }
+                  ],
+                  "event": "i"
+                }
+              ]
+            },
+            { "id": "s3", "kind": "final" },
+            {
+              "entry": [
+                {
+                  "assign": {
+                    "path": "/seen/x",
+                    "value": { "sub": [{ "ctx": "/n" }, { "lit": 0.5 }] }
+                  }
+                }
+              ],
+              "id": "s4",
+              "kind": "final",
+              "tags": ["tagged"]
+            }
+          ]
+        },
+        {
+          "entry": [
+            { "schedule": { "delay_ms": 40, "event": "a", "id": "t0" } }
+          ],
+          "id": "s5",
+          "kind": "parallel",
+          "on": [
+            {
+              "actions": [
+                {
+                  "assign": {
+                    "path": "/n",
+                    "value": { "add": [{ "ctx": "/n" }, { "lit": 1 }] }
+                  }
+                },
+                { "emit": { "name": "e0" } }
+              ],
+              "guard": {
+                "cmp": {
+                  "left": { "ctx": "/n" },
+                  "op": "lt",
+                  "right": { "lit": 5 }
+                }
+              },
+              "internal": true,
+              "target": ["#s1"]
+            },
+            {
+              "actions": [
+                {
+                  "assign": {
+                    "path": "/n",
+                    "value": { "add": [{ "ctx": "/n" }, { "lit": 1 }] }
+                  }
+                },
+                {
+                  "assign": {
+                    "path": "/n",
+                    "value": { "add": [{ "ctx": "/n" }, { "lit": 1 }] }
+                  }
+                }
+              ],
+              "event": "c",
+              "guard": {
+                "any": [
+                  { "named": { "name": "even" } },
+                  {
+                    "cmp": {
+                      "left": { "ctx": "/n" },
+                      "op": "eq",
+                      "right": { "lit": 0 }
+                    }
+                  }
+                ]
+              },
+              "target": ["#s5"]
+            }
+          ],
+          "states": [
+            {
+              "id": "s6",
+              "on": [
+                {
+                  "actions": [
+                    {
+                      "assign": { "path": "/last", "value": { "event": "/v" } }
+                    }
+                  ],
+                  "event": "a.*",
+                  "target": ["#s1.s2"]
+                },
+                {
+                  "actions": [
+                    { "emit": { "name": "e0", "params": { "ctx": "/n" } } }
+                  ],
+                  "event": "c",
+                  "guard": { "in": "#s1.s3" },
+                  "target": ["#s5.s7"]
+                },
+                {
+                  "actions": [
+                    {
+                      "assign": {
+                        "path": "/n",
+                        "value": { "add": [{ "ctx": "/n" }, { "lit": 1 }] }
+                      }
+                    },
+                    {
+                      "schedule": {
+                        "delay_ms": 30,
+                        "event": "tick",
+                        "id": "t1"
+                      }
+                    },
+                    {
+                      "assign": {
+                        "path": "/n",
+                        "value": { "add": [{ "ctx": "/n" }, { "lit": 1 }] }
+                      }
+                    }
+                  ],
+                  "guard": {
+                    "cmp": {
+                      "left": { "ctx": "/n" },
+                      "op": "lt",
+                      "right": { "lit": 3 }
+                    }
+                  },
+                  "target": ["#s1"]
+                }
+              ]
+            },
+            {
+              "after": [
+                {
+                  "actions": [
+                    {
+                      "assign": { "path": "/last", "value": { "event": "/v" } }
+                    }
+                  ],
+                  "delay_ms": 100,
+                  "target": ["#s5.s6"]
+                }
+              ],
+              "id": "s7",
+              "on": [{ "event": "a.*", "target": ["#s5"] }]
+            }
+          ]
+        }
+      ]
+    },
+    "schema": "foldstate/1"
+  },
+  "events": [
+    { "at": 0, "data": { "v": 4 }, "name": "c" },
+    { "at": 1000, "data": { "v": 2 }, "name": "d" },
+    { "at": 2000, "name": "a" },
+    { "data": { "v": 1 }, "name": "c" },
+    { "at": 4000, "data": { "v": 3 }, "name": "b" },
+    { "at": 5000, "data": { "v": 4 }, "name": "c" },
+    { "data": { "v": 1 }, "name": "a.x" },
+    { "at": 7000, "data": { "v": 4 }, "name": "c" },
+    { "at": 8000, "data": { "v": 1 }, "name": "a" },
+    { "data": { "v": "text" }, "name": "a.x" },
+    { "at": 10000, "name": "a.x" },
+    { "at": 11000, "data": { "v": 2 }, "name": "b" }
+  ]
+}

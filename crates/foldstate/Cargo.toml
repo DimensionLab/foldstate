@@ -1,4 +1,5 @@
 [package]
+workspace = "../.."
 name = "foldstate"
 description = "Statecharts as data with an event log: a pure, deterministic kernel, replay, fork, restore and explanations"
 version = "0.9.0"

@@ -1,4 +1,5 @@
 <!-- SPDX-License-Identifier: Apache-2.0 -->
+
 # foldstate-check
 
 Explores every state a [foldstate](../foldstate) machine can reach and reports what is wrong
@@ -69,14 +70,14 @@ such data out of the machine you check.
 
 ## What is reported
 
-| Field | Meaning |
-|---|---|
-| `unreached_states`, `unused_transitions` | Never active; never taken. |
-| `deadlocks` | Not done, and nothing in the alphabet or among the pending timers causes a transition. |
-| `failures` | A reachable step that fails: a livelock, or an action that cannot be evaluated. |
-| `violations` | A reachable state where an invariant (`always`, `never`, `always_fn`) does not hold. |
-| `can_finish`, `cannot_finish_from` | Whether a done state is reachable, and a state from which it no longer is. |
-| `paths_to_states`, `paths_to_transitions` | The shortest event sequence to each. |
+| Field                                     | Meaning                                                                                |
+| ----------------------------------------- | -------------------------------------------------------------------------------------- |
+| `unreached_states`, `unused_transitions`  | Never active; never taken.                                                             |
+| `deadlocks`                               | Not done, and nothing in the alphabet or among the pending timers causes a transition. |
+| `failures`                                | A reachable step that fails: a livelock, or an action that cannot be evaluated.        |
+| `violations`                              | A reachable state where an invariant (`always`, `never`, `always_fn`) does not hold.   |
+| `can_finish`, `cannot_finish_from`        | Whether a done state is reachable, and a state from which it no longer is.             |
+| `paths_to_states`, `paths_to_transitions` | The shortest event sequence to each.                                                   |
 
 ## With stateright
 

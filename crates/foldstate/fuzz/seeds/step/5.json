@@ -1,1 +1,321 @@
-{"definition":{"context":{"n":0},"id":"generated","max_microsteps":40,"root":{"id":"root","initial":"s5","invoke":[{"name":"job"}],"kind":"compound","states":[{"id":"s1","initial":"s3","kind":"compound","on":[{"event":"b a","guard":{"in":"#s6"},"target":["#s6"]}],"states":[{"entry":[{"emit":{"name":"e0"}},{"cancel":{"id":"t0"}}],"id":"s2","on":[{"actions":[{"assign":{"path":"/n","value":{"add":[{"ctx":"/n"},{"lit":1}]}}},{"cancel":{"id":"t0"}}],"event":"d","guard":{"not":{"in":"#s6.s11"}},"target":["#s6.s15.s17"]}]},{"after":[{"delay_ms":100,"target":["#s6.s11.s12"]}],"id":"s3","on":[{"actions":[{"emit":{"name":"e0"}},{"assign":{"path":"/last","value":{"event":"/v"}}}],"event":"b","internal":true,"target":["#s6.s11.s12"]},{"event":"d","target":["#s6.s7"]}]},{"id":"s4"}]},{"id":"s5","kind":"final"},{"id":"s6","kind":"parallel","on":[{"actions":[{"schedule":{"delay_ms":20,"event":"a","id":"t0"}},{"assign":{"path":"/last","value":{"event":"/v"}}}],"event":"c","target":["#s6.s11.s13"]},{"actions":[{"raise":{"data":{"lit":{"v":"raised"}},"event":"b"}},{"assign":{"path":"/n","value":{"add":[{"ctx":"/n"},{"lit":1}]}}}],"event":"a.*","guard":{"in":"#s1.s2"},"internal":true,"target":["#s1"]}],"states":[{"id":"s7","kind":"parallel","states":[{"id":"s8","on":[{"actions":[{"raise":{"event":"b"}},{"assign":{"path":"/n","value":{"mul":[{"ctx":"/n"},{"lit":3037000500}]}}}],"event":"b","guard":{"in":"#s6.s15"},"target":["#s1.s3"]}]},{"id":"s9","on":[{"actions":[{"assign":{"path":"/n","value":{"add":[{"ctx":"/n"},{"lit":1}]}}}],"event":"a.x","target":["#s6.s11"]}]},{"id":"s10"}]},{"exit":[{"assign":{"path":"/n","value":{"add":[{"ctx":"/n"},{"lit":1}]}}},{"raise":{"event":"d"}}],"id":"s11","initial":"s13","kind":"compound","states":[{"id":"s12"},{"id":"s13","on":[{"actions":[{"assign":{"path":"/n","value":{"add":[{"ctx":"/n"},{"lit":1}]}}},{"schedule":{"delay_ms":30,"event":"tick","id":"t0"}},{"schedule":{"delay_ms":40,"event":"tick","id":"t2"}}],"guard":{"cmp":{"left":{"ctx":"/n"},"op":"lt","right":{"lit":5}}},"target":["#s6.s7.s10"]},{"actions":[{"emit":{"name":"e0"}},{"assign":{"path":"/n","value":{"add":[{"ctx":"/n"},{"lit":1}]}}}],"event":"d","internal":true,"target":["#s6.s7.s9"]}]},{"id":"s14"}]},{"id":"s15","initial":"s17","invoke":[{"name":"job"}],"kind":"compound","on":[{"actions":[{"assign":{"path":"/n","value":{"add":[{"ctx":"/n"},{"lit":1}]}}},{"assign":{"path":"/n","value":{"mul":[{"ctx":"/n"},{"lit":3037000500}]}}}],"guard":{"cmp":{"left":{"ctx":"/n"},"op":"lt","right":{"lit":0}}},"target":["#s6.s11.s14"]}],"states":[{"after":[{"delay_ms":100,"target":["#s1.s3"]}],"id":"s16","on":[{"actions":[{"raise":{"data":{"lit":{"v":"raised"}},"event":"a"}}],"event":"b","guard":{"in":"#s6.s15.s16"},"target":["#s6.s15.s17"]},{"event":"c","target":["#s6.s11.s14"]},{"actions":[{"assign":{"path":"/n","value":{"add":[{"ctx":"/n"},{"lit":1}]}}},{"cancel":{"id":"t1"}},{"raise":{"event":"b"}}],"guard":{"cmp":{"left":{"ctx":"/n"},"op":"lt","right":{"lit":5}}},"target":["#s6.s7.s10"]}]},{"exit":[{"assign":{"path":"/n","value":{"add":[{"ctx":"/n"},{"lit":1}]}}}],"id":"s17","kind":"final"}]}]}]},"schema":"foldstate/1"},"events":[{"at":0,"data":{"v":1},"name":"d"},{"at":1000,"data":{"v":4},"name":"a"},{"at":2000,"data":{"v":3},"name":"c"},{"at":3000,"data":{"v":"text"},"name":"d"},{"at":4000,"data":{"v":"text"},"name":"b"},{"data":{"v":"text"},"name":"d"},{"at":6000,"data":{"v":4},"name":"a.x"},{"at":7000,"data":{"v":0},"name":"b"},{"name":"c"},{"at":9000,"data":{"v":"text"},"name":"a.x"},{"at":10000,"name":"a.x"},{"at":11000,"name":"a"}]}
+{
+  "definition": {
+    "context": { "n": 0 },
+    "id": "generated",
+    "max_microsteps": 40,
+    "root": {
+      "id": "root",
+      "initial": "s5",
+      "invoke": [{ "name": "job" }],
+      "kind": "compound",
+      "states": [
+        {
+          "id": "s1",
+          "initial": "s3",
+          "kind": "compound",
+          "on": [
+            { "event": "b a", "guard": { "in": "#s6" }, "target": ["#s6"] }
+          ],
+          "states": [
+            {
+              "entry": [
+                { "emit": { "name": "e0" } },
+                { "cancel": { "id": "t0" } }
+              ],
+              "id": "s2",
+              "on": [
+                {
+                  "actions": [
+                    {
+                      "assign": {
+                        "path": "/n",
+                        "value": { "add": [{ "ctx": "/n" }, { "lit": 1 }] }
+                      }
+                    },
+                    { "cancel": { "id": "t0" } }
+                  ],
+                  "event": "d",
+                  "guard": { "not": { "in": "#s6.s11" } },
+                  "target": ["#s6.s15.s17"]
+                }
+              ]
+            },
+            {
+              "after": [{ "delay_ms": 100, "target": ["#s6.s11.s12"] }],
+              "id": "s3",
+              "on": [
+                {
+                  "actions": [
+                    { "emit": { "name": "e0" } },
+                    {
+                      "assign": { "path": "/last", "value": { "event": "/v" } }
+                    }
+                  ],
+                  "event": "b",
+                  "internal": true,
+                  "target": ["#s6.s11.s12"]
+                },
+                { "event": "d", "target": ["#s6.s7"] }
+              ]
+            },
+            { "id": "s4" }
+          ]
+        },
+        { "id": "s5", "kind": "final" },
+        {
+          "id": "s6",
+          "kind": "parallel",
+          "on": [
+            {
+              "actions": [
+                { "schedule": { "delay_ms": 20, "event": "a", "id": "t0" } },
+                { "assign": { "path": "/last", "value": { "event": "/v" } } }
+              ],
+              "event": "c",
+              "target": ["#s6.s11.s13"]
+            },
+            {
+              "actions": [
+                {
+                  "raise": {
+                    "data": { "lit": { "v": "raised" } },
+                    "event": "b"
+                  }
+                },
+                {
+                  "assign": {
+                    "path": "/n",
+                    "value": { "add": [{ "ctx": "/n" }, { "lit": 1 }] }
+                  }
+                }
+              ],
+              "event": "a.*",
+              "guard": { "in": "#s1.s2" },
+              "internal": true,
+              "target": ["#s1"]
+            }
+          ],
+          "states": [
+            {
+              "id": "s7",
+              "kind": "parallel",
+              "states": [
+                {
+                  "id": "s8",
+                  "on": [
+                    {
+                      "actions": [
+                        { "raise": { "event": "b" } },
+                        {
+                          "assign": {
+                            "path": "/n",
+                            "value": {
+                              "mul": [{ "ctx": "/n" }, { "lit": 3037000500 }]
+                            }
+                          }
+                        }
+                      ],
+                      "event": "b",
+                      "guard": { "in": "#s6.s15" },
+                      "target": ["#s1.s3"]
+                    }
+                  ]
+                },
+                {
+                  "id": "s9",
+                  "on": [
+                    {
+                      "actions": [
+                        {
+                          "assign": {
+                            "path": "/n",
+                            "value": { "add": [{ "ctx": "/n" }, { "lit": 1 }] }
+                          }
+                        }
+                      ],
+                      "event": "a.x",
+                      "target": ["#s6.s11"]
+                    }
+                  ]
+                },
+                { "id": "s10" }
+              ]
+            },
+            {
+              "exit": [
+                {
+                  "assign": {
+                    "path": "/n",
+                    "value": { "add": [{ "ctx": "/n" }, { "lit": 1 }] }
+                  }
+                },
+                { "raise": { "event": "d" } }
+              ],
+              "id": "s11",
+              "initial": "s13",
+              "kind": "compound",
+              "states": [
+                { "id": "s12" },
+                {
+                  "id": "s13",
+                  "on": [
+                    {
+                      "actions": [
+                        {
+                          "assign": {
+                            "path": "/n",
+                            "value": { "add": [{ "ctx": "/n" }, { "lit": 1 }] }
+                          }
+                        },
+                        {
+                          "schedule": {
+                            "delay_ms": 30,
+                            "event": "tick",
+                            "id": "t0"
+                          }
+                        },
+                        {
+                          "schedule": {
+                            "delay_ms": 40,
+                            "event": "tick",
+                            "id": "t2"
+                          }
+                        }
+                      ],
+                      "guard": {
+                        "cmp": {
+                          "left": { "ctx": "/n" },
+                          "op": "lt",
+                          "right": { "lit": 5 }
+                        }
+                      },
+                      "target": ["#s6.s7.s10"]
+                    },
+                    {
+                      "actions": [
+                        { "emit": { "name": "e0" } },
+                        {
+                          "assign": {
+                            "path": "/n",
+                            "value": { "add": [{ "ctx": "/n" }, { "lit": 1 }] }
+                          }
+                        }
+                      ],
+                      "event": "d",
+                      "internal": true,
+                      "target": ["#s6.s7.s9"]
+                    }
+                  ]
+                },
+                { "id": "s14" }
+              ]
+            },
+            {
+              "id": "s15",
+              "initial": "s17",
+              "invoke": [{ "name": "job" }],
+              "kind": "compound",
+              "on": [
+                {
+                  "actions": [
+                    {
+                      "assign": {
+                        "path": "/n",
+                        "value": { "add": [{ "ctx": "/n" }, { "lit": 1 }] }
+                      }
+                    },
+                    {
+                      "assign": {
+                        "path": "/n",
+                        "value": {
+                          "mul": [{ "ctx": "/n" }, { "lit": 3037000500 }]
+                        }
+                      }
+                    }
+                  ],
+                  "guard": {
+                    "cmp": {
+                      "left": { "ctx": "/n" },
+                      "op": "lt",
+                      "right": { "lit": 0 }
+                    }
+                  },
+                  "target": ["#s6.s11.s14"]
+                }
+              ],
+              "states": [
+                {
+                  "after": [{ "delay_ms": 100, "target": ["#s1.s3"] }],
+                  "id": "s16",
+                  "on": [
+                    {
+                      "actions": [
+                        {
+                          "raise": {
+                            "data": { "lit": { "v": "raised" } },
+                            "event": "a"
+                          }
+                        }
+                      ],
+                      "event": "b",
+                      "guard": { "in": "#s6.s15.s16" },
+                      "target": ["#s6.s15.s17"]
+                    },
+                    { "event": "c", "target": ["#s6.s11.s14"] },
+                    {
+                      "actions": [
+                        {
+                          "assign": {
+                            "path": "/n",
+                            "value": { "add": [{ "ctx": "/n" }, { "lit": 1 }] }
+                          }
+                        },
+                        { "cancel": { "id": "t1" } },
+                        { "raise": { "event": "b" } }
+                      ],
+                      "guard": {
+                        "cmp": {
+                          "left": { "ctx": "/n" },
+                          "op": "lt",
+                          "right": { "lit": 5 }
+                        }
+                      },
+                      "target": ["#s6.s7.s10"]
+                    }
+                  ]
+                },
+                {
+                  "exit": [
+                    {
+                      "assign": {
+                        "path": "/n",
+                        "value": { "add": [{ "ctx": "/n" }, { "lit": 1 }] }
+                      }
+                    }
+                  ],
+                  "id": "s17",
+                  "kind": "final"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "schema": "foldstate/1"
+  },
+  "events": [
+    { "at": 0, "data": { "v": 1 }, "name": "d" },
+    { "at": 1000, "data": { "v": 4 }, "name": "a" },
+    { "at": 2000, "data": { "v": 3 }, "name": "c" },
+    { "at": 3000, "data": { "v": "text" }, "name": "d" },
+    { "at": 4000, "data": { "v": "text" }, "name": "b" },
+    { "data": { "v": "text" }, "name": "d" },
+    { "at": 6000, "data": { "v": 4 }, "name": "a.x" },
+    { "at": 7000, "data": { "v": 0 }, "name": "b" },
+    { "name": "c" },
+    { "at": 9000, "data": { "v": "text" }, "name": "a.x" },
+    { "at": 10000, "name": "a.x" },
+    { "at": 11000, "name": "a" }
+  ]
+}

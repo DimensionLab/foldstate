@@ -1,4 +1,5 @@
 [package]
+workspace = "../.."
 name = "foldstate-check"
 description = "Explore a foldstate machine: unreachable states, deadlocks, invariants and the shortest event sequence to every state and transition"
 version = "0.9.0"

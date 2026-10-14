@@ -1,1 +1,20 @@
-{"schema":"foldstate/1","id":"generated","context":{"n":0},"max_microsteps":40,"root":{"id":"root","kind":"parallel","states":[{"id":"s1"},{"id":"s2"}],"on":[{"guard":{"in":"#s2"},"target":["#s2","#s1"],"actions":[{"assign":{"path":"/last","value":{"event":"/v"}}}]}]}}
+{
+  "schema": "foldstate/1",
+  "id": "generated",
+  "context": { "n": 0 },
+  "max_microsteps": 40,
+  "root": {
+    "id": "root",
+    "kind": "parallel",
+    "states": [{ "id": "s1" }, { "id": "s2" }],
+    "on": [
+      {
+        "guard": { "in": "#s2" },
+        "target": ["#s2", "#s1"],
+        "actions": [
+          { "assign": { "path": "/last", "value": { "event": "/v" } } }
+        ]
+      }
+    ]
+  }
+}

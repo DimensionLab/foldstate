@@ -3,7 +3,7 @@
 //
 //   cargo build -p foldstate --release --example wasm_bench --target wasm32-unknown-unknown
 //   node crates/foldstate/examples/wasm_bench.mjs <path to wasm_bench.wasm>
-import { readFile } from "node:fs/promises";
+import { readFile } from 'node:fs/promises';
 
 const EVENTS = 200_000;
 const bytes = await readFile(process.argv[2]);

@@ -1,1 +1,64 @@
-{"schema":"foldstate/1","id":"generated","context":{"n":0},"unhandled":"ignore","max_microsteps":40,"root":{"id":"root","kind":"parallel","states":[{"id":"s1","entry":[{"assign":{"path":"/n","value":{"add":[{"ctx":"/n"},{"lit":1}]}}}]},{"id":"s2","on":[{"event":"a","guard":{"in":"#s1"},"target":["#s2"],"actions":[{"emit":{"name":"e2","params":{"ctx":"/n"}}}]},{"event":"a.x","guard":{"in":"#s1"}},{"event":"a","guard":{"not":{"in":"#s2"}},"target":["#s1"],"actions":[{"assign":{"path":"/n","value":{"add":[{"ctx":"/n"},{"lit":1}]}}},{"assign":{"path":"/last","value":{"event":"/v"}}}]}],"exit":[{"assign":{"path":"/seen/y~0","value":{"sub":[{"ctx":"/n"},{"lit":0.5}]}}},{"assign":{"path":"/n","value":{"add":[{"ctx":"/n"},{"lit":1}]}}}]}]}}
+{
+  "schema": "foldstate/1",
+  "id": "generated",
+  "context": { "n": 0 },
+  "unhandled": "ignore",
+  "max_microsteps": 40,
+  "root": {
+    "id": "root",
+    "kind": "parallel",
+    "states": [
+      {
+        "id": "s1",
+        "entry": [
+          {
+            "assign": {
+              "path": "/n",
+              "value": { "add": [{ "ctx": "/n" }, { "lit": 1 }] }
+            }
+          }
+        ]
+      },
+      {
+        "id": "s2",
+        "on": [
+          {
+            "event": "a",
+            "guard": { "in": "#s1" },
+            "target": ["#s2"],
+            "actions": [{ "emit": { "name": "e2", "params": { "ctx": "/n" } } }]
+          },
+          { "event": "a.x", "guard": { "in": "#s1" } },
+          {
+            "event": "a",
+            "guard": { "not": { "in": "#s2" } },
+            "target": ["#s1"],
+            "actions": [
+              {
+                "assign": {
+                  "path": "/n",
+                  "value": { "add": [{ "ctx": "/n" }, { "lit": 1 }] }
+                }
+              },
+              { "assign": { "path": "/last", "value": { "event": "/v" } } }
+            ]
+          }
+        ],
+        "exit": [
+          {
+            "assign": {
+              "path": "/seen/y~0",
+              "value": { "sub": [{ "ctx": "/n" }, { "lit": 0.5 }] }
+            }
+          },
+          {
+            "assign": {
+              "path": "/n",
+              "value": { "add": [{ "ctx": "/n" }, { "lit": 1 }] }
+            }
+          }
+        ]
+      }
+    ]
+  }
+}

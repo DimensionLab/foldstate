@@ -1,4 +1,5 @@
 <!-- SPDX-License-Identifier: Apache-2.0 -->
+
 # foldstate
 
 Statecharts as data, with a log you can replay, fork and step through in both directions.
@@ -118,30 +119,30 @@ let json = serde_json::to_string(&log.to_wire(&machine)?)?;
 
 ## What you get
 
-| | |
-|---|---|
-| `Machine::compile` | Validates a definition and reports the first problem with the place it is in. |
-| `Machine::start`, `step`, `step_in_place` | The kernel. A refused event changes nothing. |
-| `Log::append`, `state_at`, `cursor` | Record events; read the state at any entry; move one entry forward or back. |
-| `Log::fork`, `diff` | Continue from any entry on a new branch that shares the earlier entries; compare two positions. |
-| `Log::restore` | Make an earlier state current again by appending an entry. Nothing is removed. |
-| `Log::verify` | Recompute every entry from the definition and report the first one that differs. |
-| `Machine::explain`, `enabled` | Which transitions an event would take, which it would not and why; which events are accepted now. |
-| `Machine::states`, `transitions` | The graph, for drawing it. |
-| `to_wire`, `from_wire` | Snapshots, entries and logs as JSON. State references are paths, not numbers. |
-| `WireSnapshot::redo`, `undo` | Follow a serialised log entry by entry without the definition. |
+|                                           |                                                                                                   |
+| ----------------------------------------- | ------------------------------------------------------------------------------------------------- |
+| `Machine::compile`                        | Validates a definition and reports the first problem with the place it is in.                     |
+| `Machine::start`, `step`, `step_in_place` | The kernel. A refused event changes nothing.                                                      |
+| `Log::append`, `state_at`, `cursor`       | Record events; read the state at any entry; move one entry forward or back.                       |
+| `Log::fork`, `diff`                       | Continue from any entry on a new branch that shares the earlier entries; compare two positions.   |
+| `Log::restore`                            | Make an earlier state current again by appending an entry. Nothing is removed.                    |
+| `Log::verify`                             | Recompute every entry from the definition and report the first one that differs.                  |
+| `Machine::explain`, `enabled`             | Which transitions an event would take, which it would not and why; which events are accepted now. |
+| `Machine::states`, `transitions`          | The graph, for drawing it.                                                                        |
+| `to_wire`, `from_wire`                    | Snapshots, entries and logs as JSON. State references are paths, not numbers.                     |
+| `WireSnapshot::redo`, `undo`              | Follow a serialised log entry by entry without the definition.                                    |
 
 ## Effects, timers and work owned by a state
 
 The kernel never does anything outside the snapshot. It returns effects:
 
-| Effect | The host should |
-|---|---|
-| `emit {name, params}` | Do whatever `name` means. |
-| `schedule {id, event, delay_ms, due_ms?}` | Send `event` after the delay. |
-| `cancel {id}` | Forget that timer. |
-| `start {id, name, params}` | Start the work a state declared with `invoke`. |
-| `stop {id}` | Stop it: the state was left. |
+| Effect                                    | The host should                                |
+| ----------------------------------------- | ---------------------------------------------- |
+| `emit {name, params}`                     | Do whatever `name` means.                      |
+| `schedule {id, event, delay_ms, due_ms?}` | Send `event` after the delay.                  |
+| `cancel {id}`                             | Forget that timer.                             |
+| `start {id, name, params}`                | Start the work a state declared with `invoke`. |
+| `stop {id}`                               | Stop it: the state was left.                   |
 
 Results come back as ordinary events. Time is data: pass the event's time in `Event::at` and
 timers get a due time; the kernel reads no clock, so a replay never depends on when it runs.
@@ -179,24 +180,24 @@ Measured on an Apple M1 Max, one thread, Rust 1.99, release build. Reproduce wit
 One event (`step_in_place`), each region a nine-state job lifecycle:
 
 | Parallel regions | Every event sent | Readiness derived by guards |
-|---|---|---|
-| 1 | 0.33 µs | |
-| 10 | 0.39 µs | 0.46 µs |
-| 100 | 0.48 µs | 0.58 µs |
-| 1000 | 0.61 µs | 0.84 µs |
+| ---------------- | ---------------- | --------------------------- |
+| 1                | 0.33 µs          |                             |
+| 10               | 0.39 µs          | 0.46 µs                     |
+| 100              | 0.48 µs          | 0.58 µs                     |
+| 1000             | 0.61 µs          | 0.84 µs                     |
 
 A log of 1 000 000 entries (10 regions, mostly progress updates):
 
-| Operation | Time |
-|---|---|
-| Append (step and record) | 0.88 s, 0.88 µs per entry |
-| Fold: apply every entry from the first | 0.24 s |
-| Undo every entry back to the first | 0.24 s |
-| Verify: recompute and compare every entry | 0.65 s |
-| State at a random entry, checkpoint every 256 | 34 µs |
-| Fork in the middle | 13 µs |
-| Write as JSON (194 bytes per entry) | 0.70 s |
-| Read from JSON and rebuild | 1.3 s |
+| Operation                                     | Time                      |
+| --------------------------------------------- | ------------------------- |
+| Append (step and record)                      | 0.88 s, 0.88 µs per entry |
+| Fold: apply every entry from the first        | 0.24 s                    |
+| Undo every entry back to the first            | 0.24 s                    |
+| Verify: recompute and compare every entry     | 0.65 s                    |
+| State at a random entry, checkpoint every 256 | 34 µs                     |
+| Fork in the middle                            | 13 µs                     |
+| Write as JSON (194 bytes per entry)           | 0.70 s                    |
+| Read from JSON and rebuild                    | 1.3 s                     |
 
 Compiling a definition: 0.3 ms for 100 states, 3 ms for 1000, 35 ms for 10 000.
 
@@ -223,18 +224,18 @@ Execution follows the algorithm of W3C SCXML 1.0 (run-to-completion macrosteps, 
 queue first, document-order priority, conflicts between parallel regions). The differences
 that matter most in practice:
 
-| | SCXML | XState v5 | foldstate |
-|---|---|---|---|
-| Event descriptor `a.b` | Matches `a.b` and `a.b.c` | Matches `a.b` only | Matches `a.b` only; write `a.b.*` for the prefix |
-| Event that nothing handles | Dropped | Dropped | Rejected with an error, unless the definition ignores it |
-| Guards and data | ECMAScript, XPath | JavaScript functions | Comparison, `in`, `+ - *`, and guards named for the host; no scripting |
-| A guard that cannot be evaluated | False, plus an error event | Throws | False |
-| An action that fails | Error event, rest of the block skipped | Throws | The step fails and changes nothing |
-| Domain of a transition | Nearest compound ancestor | Nearest ancestor of any kind | Nearest compound ancestor |
-| Ancestor's transition when a parallel region handles the event | Taken for the other regions | Not taken | Taken for the other regions |
-| Conflicting transitions | First in document order wins | First entered wins | First in document order wins |
-| On completion | All states exited | All states exited | Configuration kept; work stopped, timers cancelled |
-| Child machines | `invoke` starts a session | Actors | `invoke` produces start and stop effects; the host runs the child |
+|                                                                | SCXML                                  | XState v5                    | foldstate                                                              |
+| -------------------------------------------------------------- | -------------------------------------- | ---------------------------- | ---------------------------------------------------------------------- |
+| Event descriptor `a.b`                                         | Matches `a.b` and `a.b.c`              | Matches `a.b` only           | Matches `a.b` only; write `a.b.*` for the prefix                       |
+| Event that nothing handles                                     | Dropped                                | Dropped                      | Rejected with an error, unless the definition ignores it               |
+| Guards and data                                                | ECMAScript, XPath                      | JavaScript functions         | Comparison, `in`, `+ - *`, and guards named for the host; no scripting |
+| A guard that cannot be evaluated                               | False, plus an error event             | Throws                       | False                                                                  |
+| An action that fails                                           | Error event, rest of the block skipped | Throws                       | The step fails and changes nothing                                     |
+| Domain of a transition                                         | Nearest compound ancestor              | Nearest ancestor of any kind | Nearest compound ancestor                                              |
+| Ancestor's transition when a parallel region handles the event | Taken for the other regions            | Not taken                    | Taken for the other regions                                            |
+| Conflicting transitions                                        | First in document order wins           | First entered wins           | First in document order wins                                           |
+| On completion                                                  | All states exited                      | All states exited            | Configuration kept; work stopped, timers cancelled                     |
+| Child machines                                                 | `invoke` starts a session              | Actors                       | `invoke` produces start and stop effects; the host runs the child      |
 
 Every difference, with the reasons, is in [the semantics](docs/semantics.md).
 

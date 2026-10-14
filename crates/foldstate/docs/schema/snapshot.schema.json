@@ -4,12 +4,7 @@
   "title": "foldstate snapshot",
   "type": "object",
   "additionalProperties": false,
-  "required": [
-    "schema",
-    "machine",
-    "configuration",
-    "context"
-  ],
+  "required": ["schema", "machine", "configuration", "context"],
   "properties": {
     "schema": {
       "const": "foldstate-snapshot/1"
@@ -20,10 +15,7 @@
       "description": "SHA-256 of the canonical JSON (RFC 8785) of the definition"
     },
     "status": {
-      "enum": [
-        "active",
-        "done"
-      ],
+      "enum": ["active", "done"],
       "default": "active"
     },
     "configuration": {
@@ -60,10 +52,7 @@
     "timer": {
       "type": "object",
       "additionalProperties": false,
-      "required": [
-        "event",
-        "delay_ms"
-      ],
+      "required": ["event", "delay_ms"],
       "properties": {
         "event": {
           "type": "string"
@@ -80,10 +69,7 @@
     "invocation": {
       "type": "object",
       "additionalProperties": false,
-      "required": [
-        "state",
-        "name"
-      ],
+      "required": ["state", "name"],
       "properties": {
         "state": {
           "type": "string"

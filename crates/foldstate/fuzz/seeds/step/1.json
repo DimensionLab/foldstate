@@ -1,1 +1,93 @@
-{"definition":{"context":{"n":0},"id":"generated","max_microsteps":40,"root":{"id":"root","kind":"parallel","on":[{"actions":[{"assign":{"path":"/n","value":{"add":[{"ctx":"/n"},{"lit":1}]}}},{"raise":{"data":{"lit":{"v":"raised"}},"event":"b"}}],"event":"i","target":["#s1"]}],"states":[{"entry":[{"raise":{"event":"b"}}],"id":"s1","on":[{"actions":[{"assign":{"path":"/seen/z~1w","value":{"sub":[{"ctx":"/n"},{"lit":0.5}]}}},{"assign":{"path":"/n","value":{"add":[{"ctx":"/n"},{"lit":1}]}}}],"event":"a","target":["#s1"]}]},{"id":"s2","on":[{"actions":[{"raise":{"data":{"lit":{"v":"raised"}},"event":"b"}}],"event":"b","internal":true,"target":["#s1"]},{"actions":[{"assign":{"path":"/n","value":{"add":[{"ctx":"/n"},{"lit":1}]}}},{"assign":{"path":"/last","value":{"event":"/v"}}},{"emit":{"name":"e2","params":{"ctx":"/n"}}}],"guard":{"cmp":{"left":{"ctx":"/n"},"op":"lt","right":{"lit":4}}},"target":["#s2"]}],"tags":["tagged"]}]},"schema":"foldstate/1"},"events":[]}
+{
+  "definition": {
+    "context": { "n": 0 },
+    "id": "generated",
+    "max_microsteps": 40,
+    "root": {
+      "id": "root",
+      "kind": "parallel",
+      "on": [
+        {
+          "actions": [
+            {
+              "assign": {
+                "path": "/n",
+                "value": { "add": [{ "ctx": "/n" }, { "lit": 1 }] }
+              }
+            },
+            { "raise": { "data": { "lit": { "v": "raised" } }, "event": "b" } }
+          ],
+          "event": "i",
+          "target": ["#s1"]
+        }
+      ],
+      "states": [
+        {
+          "entry": [{ "raise": { "event": "b" } }],
+          "id": "s1",
+          "on": [
+            {
+              "actions": [
+                {
+                  "assign": {
+                    "path": "/seen/z~1w",
+                    "value": { "sub": [{ "ctx": "/n" }, { "lit": 0.5 }] }
+                  }
+                },
+                {
+                  "assign": {
+                    "path": "/n",
+                    "value": { "add": [{ "ctx": "/n" }, { "lit": 1 }] }
+                  }
+                }
+              ],
+              "event": "a",
+              "target": ["#s1"]
+            }
+          ]
+        },
+        {
+          "id": "s2",
+          "on": [
+            {
+              "actions": [
+                {
+                  "raise": {
+                    "data": { "lit": { "v": "raised" } },
+                    "event": "b"
+                  }
+                }
+              ],
+              "event": "b",
+              "internal": true,
+              "target": ["#s1"]
+            },
+            {
+              "actions": [
+                {
+                  "assign": {
+                    "path": "/n",
+                    "value": { "add": [{ "ctx": "/n" }, { "lit": 1 }] }
+                  }
+                },
+                { "assign": { "path": "/last", "value": { "event": "/v" } } },
+                { "emit": { "name": "e2", "params": { "ctx": "/n" } } }
+              ],
+              "guard": {
+                "cmp": {
+                  "left": { "ctx": "/n" },
+                  "op": "lt",
+                  "right": { "lit": 4 }
+                }
+              },
+              "target": ["#s2"]
+            }
+          ],
+          "tags": ["tagged"]
+        }
+      ]
+    },
+    "schema": "foldstate/1"
+  },
+  "events": []
+}

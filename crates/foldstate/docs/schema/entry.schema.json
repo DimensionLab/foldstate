@@ -7,9 +7,7 @@
     "event": {
       "type": "object",
       "additionalProperties": false,
-      "required": [
-        "name"
-      ],
+      "required": ["name"],
       "properties": {
         "name": {
           "type": "string"
@@ -24,10 +22,7 @@
     "timer": {
       "type": "object",
       "additionalProperties": false,
-      "required": [
-        "event",
-        "delay_ms"
-      ],
+      "required": ["event", "delay_ms"],
       "properties": {
         "event": {
           "type": "string"
@@ -44,10 +39,7 @@
     "invocation": {
       "type": "object",
       "additionalProperties": false,
-      "required": [
-        "state",
-        "name"
-      ],
+      "required": ["state", "name"],
       "properties": {
         "state": {
           "type": "string"
@@ -64,9 +56,7 @@
         {
           "type": "object",
           "additionalProperties": false,
-          "required": [
-            "enter"
-          ],
+          "required": ["enter"],
           "properties": {
             "enter": {
               "type": "string",
@@ -77,9 +67,7 @@
         {
           "type": "object",
           "additionalProperties": false,
-          "required": [
-            "exit"
-          ],
+          "required": ["exit"],
           "properties": {
             "exit": {
               "type": "string",
@@ -90,16 +78,12 @@
         {
           "type": "object",
           "additionalProperties": false,
-          "required": [
-            "set"
-          ],
+          "required": ["set"],
           "properties": {
             "set": {
               "type": "object",
               "additionalProperties": false,
-              "required": [
-                "path"
-              ],
+              "required": ["path"],
               "properties": {
                 "path": {
                   "type": "string",
@@ -115,16 +99,12 @@
         {
           "type": "object",
           "additionalProperties": false,
-          "required": [
-            "history"
-          ],
+          "required": ["history"],
           "properties": {
             "history": {
               "type": "object",
               "additionalProperties": false,
-              "required": [
-                "state"
-              ],
+              "required": ["state"],
               "properties": {
                 "state": {
                   "type": "string"
@@ -148,16 +128,12 @@
         {
           "type": "object",
           "additionalProperties": false,
-          "required": [
-            "timer"
-          ],
+          "required": ["timer"],
           "properties": {
             "timer": {
               "type": "object",
               "additionalProperties": false,
-              "required": [
-                "id"
-              ],
+              "required": ["id"],
               "properties": {
                 "id": {
                   "type": "string"
@@ -175,16 +151,12 @@
         {
           "type": "object",
           "additionalProperties": false,
-          "required": [
-            "invocation"
-          ],
+          "required": ["invocation"],
           "properties": {
             "invocation": {
               "type": "object",
               "additionalProperties": false,
-              "required": [
-                "id"
-              ],
+              "required": ["id"],
               "properties": {
                 "id": {
                   "type": "string"
@@ -202,29 +174,18 @@
         {
           "type": "object",
           "additionalProperties": false,
-          "required": [
-            "status"
-          ],
+          "required": ["status"],
           "properties": {
             "status": {
               "type": "object",
               "additionalProperties": false,
-              "required": [
-                "before",
-                "after"
-              ],
+              "required": ["before", "after"],
               "properties": {
                 "before": {
-                  "enum": [
-                    "active",
-                    "done"
-                  ]
+                  "enum": ["active", "done"]
                 },
                 "after": {
-                  "enum": [
-                    "active",
-                    "done"
-                  ]
+                  "enum": ["active", "done"]
                 }
               }
             }
@@ -237,16 +198,12 @@
         {
           "type": "object",
           "additionalProperties": false,
-          "required": [
-            "emit"
-          ],
+          "required": ["emit"],
           "properties": {
             "emit": {
               "type": "object",
               "additionalProperties": false,
-              "required": [
-                "name"
-              ],
+              "required": ["name"],
               "properties": {
                 "name": {
                   "type": "string"
@@ -259,18 +216,12 @@
         {
           "type": "object",
           "additionalProperties": false,
-          "required": [
-            "schedule"
-          ],
+          "required": ["schedule"],
           "properties": {
             "schedule": {
               "type": "object",
               "additionalProperties": false,
-              "required": [
-                "id",
-                "event",
-                "delay_ms"
-              ],
+              "required": ["id", "event", "delay_ms"],
               "properties": {
                 "id": {
                   "type": "string"
@@ -292,16 +243,12 @@
         {
           "type": "object",
           "additionalProperties": false,
-          "required": [
-            "cancel"
-          ],
+          "required": ["cancel"],
           "properties": {
             "cancel": {
               "type": "object",
               "additionalProperties": false,
-              "required": [
-                "id"
-              ],
+              "required": ["id"],
               "properties": {
                 "id": {
                   "type": "string"
@@ -313,17 +260,12 @@
         {
           "type": "object",
           "additionalProperties": false,
-          "required": [
-            "start"
-          ],
+          "required": ["start"],
           "properties": {
             "start": {
               "type": "object",
               "additionalProperties": false,
-              "required": [
-                "id",
-                "name"
-              ],
+              "required": ["id", "name"],
               "properties": {
                 "id": {
                   "type": "string"
@@ -339,16 +281,12 @@
         {
           "type": "object",
           "additionalProperties": false,
-          "required": [
-            "stop"
-          ],
+          "required": ["stop"],
           "properties": {
             "stop": {
               "type": "object",
               "additionalProperties": false,
-              "required": [
-                "id"
-              ],
+              "required": ["id"],
               "properties": {
                 "id": {
                   "type": "string"
@@ -362,10 +300,7 @@
     "entry": {
       "type": "object",
       "additionalProperties": false,
-      "required": [
-        "seq",
-        "kind"
-      ],
+      "required": ["seq", "kind"],
       "properties": {
         "seq": {
           "type": "integer",
@@ -377,9 +312,7 @@
             {
               "type": "object",
               "additionalProperties": false,
-              "required": [
-                "start"
-              ],
+              "required": ["start"],
               "properties": {
                 "start": {
                   "type": "object",
@@ -394,9 +327,7 @@
             {
               "type": "object",
               "additionalProperties": false,
-              "required": [
-                "event"
-              ],
+              "required": ["event"],
               "properties": {
                 "event": {
                   "$ref": "#/$defs/event"
@@ -406,16 +337,12 @@
             {
               "type": "object",
               "additionalProperties": false,
-              "required": [
-                "restore"
-              ],
+              "required": ["restore"],
               "properties": {
                 "restore": {
                   "type": "object",
                   "additionalProperties": false,
-                  "required": [
-                    "to"
-                  ],
+                  "required": ["to"],
                   "properties": {
                     "to": {
                       "type": "integer",
@@ -452,10 +379,7 @@
             "items": {
               "type": "object",
               "additionalProperties": false,
-              "required": [
-                "source",
-                "index"
-              ],
+              "required": ["source", "index"],
               "properties": {
                 "source": {
                   "type": "string"
@@ -473,9 +397,7 @@
           "items": {
             "type": "object",
             "additionalProperties": false,
-            "required": [
-              "name"
-            ],
+            "required": ["name"],
             "properties": {
               "name": {
                 "type": "string"

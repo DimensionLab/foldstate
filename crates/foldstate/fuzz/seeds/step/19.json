@@ -1,1 +1,58 @@
-{"definition":{"context":{"n":0},"id":"generated","max_microsteps":40,"root":{"id":"root","kind":"compound","states":[{"entry":[{"assign":{"path":"/n","value":{"add":[{"ctx":"/n"},{"lit":1}]}}},{"schedule":{"delay_ms":30,"event":"b","id":"t1"}}],"id":"s1","on":[{"event":"done.state.*","internal":true,"target":["#s3"]},{"event":"d","target":["#s1"]}]},{"id":"s3","kind":"history"},{"id":"s2","on":[{"actions":[{"assign":{"path":"/last","value":{"event":"/v"}}}],"event":"c","target":["#s3"]}]}]},"schema":"foldstate/1","unhandled":"ignore"},"events":[{"at":0,"name":"a"},{"at":1000,"data":{"v":"text"},"name":"a"},{"at":2000,"data":{"v":2},"name":"a"},{"at":3000,"data":{"v":"text"},"name":"a"},{"data":{"v":1},"name":"b"},{"at":5000,"data":{"v":3},"name":"c"},{"name":"d"},{"at":7000,"data":{"v":4},"name":"a"},{"at":8000,"data":{"v":4},"name":"a"},{"data":{"v":2},"name":"c"},{"data":{"v":"text"},"name":"a"},{"at":11000,"name":"b"}]}
+{
+  "definition": {
+    "context": { "n": 0 },
+    "id": "generated",
+    "max_microsteps": 40,
+    "root": {
+      "id": "root",
+      "kind": "compound",
+      "states": [
+        {
+          "entry": [
+            {
+              "assign": {
+                "path": "/n",
+                "value": { "add": [{ "ctx": "/n" }, { "lit": 1 }] }
+              }
+            },
+            { "schedule": { "delay_ms": 30, "event": "b", "id": "t1" } }
+          ],
+          "id": "s1",
+          "on": [
+            { "event": "done.state.*", "internal": true, "target": ["#s3"] },
+            { "event": "d", "target": ["#s1"] }
+          ]
+        },
+        { "id": "s3", "kind": "history" },
+        {
+          "id": "s2",
+          "on": [
+            {
+              "actions": [
+                { "assign": { "path": "/last", "value": { "event": "/v" } } }
+              ],
+              "event": "c",
+              "target": ["#s3"]
+            }
+          ]
+        }
+      ]
+    },
+    "schema": "foldstate/1",
+    "unhandled": "ignore"
+  },
+  "events": [
+    { "at": 0, "name": "a" },
+    { "at": 1000, "data": { "v": "text" }, "name": "a" },
+    { "at": 2000, "data": { "v": 2 }, "name": "a" },
+    { "at": 3000, "data": { "v": "text" }, "name": "a" },
+    { "data": { "v": 1 }, "name": "b" },
+    { "at": 5000, "data": { "v": 3 }, "name": "c" },
+    { "name": "d" },
+    { "at": 7000, "data": { "v": 4 }, "name": "a" },
+    { "at": 8000, "data": { "v": 4 }, "name": "a" },
+    { "data": { "v": 2 }, "name": "c" },
+    { "data": { "v": "text" }, "name": "a" },
+    { "at": 11000, "name": "b" }
+  ]
+}

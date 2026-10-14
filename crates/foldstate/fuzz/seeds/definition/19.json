@@ -1,1 +1,42 @@
-{"schema":"foldstate/1","id":"generated","context":{"n":0},"unhandled":"ignore","max_microsteps":40,"root":{"id":"root","kind":"compound","states":[{"id":"s1","on":[{"event":"done.state.*","target":["#s3"],"internal":true},{"event":"d","target":["#s1"]}],"entry":[{"assign":{"path":"/n","value":{"add":[{"ctx":"/n"},{"lit":1}]}}},{"schedule":{"id":"t1","event":"b","delay_ms":30}}]},{"id":"s3","kind":"history"},{"id":"s2","on":[{"event":"c","target":["#s3"],"actions":[{"assign":{"path":"/last","value":{"event":"/v"}}}]}]}]}}
+{
+  "schema": "foldstate/1",
+  "id": "generated",
+  "context": { "n": 0 },
+  "unhandled": "ignore",
+  "max_microsteps": 40,
+  "root": {
+    "id": "root",
+    "kind": "compound",
+    "states": [
+      {
+        "id": "s1",
+        "on": [
+          { "event": "done.state.*", "target": ["#s3"], "internal": true },
+          { "event": "d", "target": ["#s1"] }
+        ],
+        "entry": [
+          {
+            "assign": {
+              "path": "/n",
+              "value": { "add": [{ "ctx": "/n" }, { "lit": 1 }] }
+            }
+          },
+          { "schedule": { "id": "t1", "event": "b", "delay_ms": 30 } }
+        ]
+      },
+      { "id": "s3", "kind": "history" },
+      {
+        "id": "s2",
+        "on": [
+          {
+            "event": "c",
+            "target": ["#s3"],
+            "actions": [
+              { "assign": { "path": "/last", "value": { "event": "/v" } } }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}
